@@ -20,7 +20,7 @@ struct MyTabView: View {
             
             ItemsView()
                 .tabItem {
-                    Image(systemName: "handbag")
+                    Image(systemName: "handbag") //Icono que he puesto para items
                     Text("Items")
                 }
                 .edgesIgnoringSafeArea(.top)
