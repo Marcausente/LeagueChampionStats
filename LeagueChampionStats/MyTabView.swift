@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-struct ChampionsView: View {
+struct MyTabView: View {
     var body: some View {
         TabView{
-            Color.background
+            
+            ChampionsView()
                 .tabItem {
                     Image(systemName: "figure.wave") //Icono puesto para los campeones
                     Text("Champions")
                 }
                 .edgesIgnoringSafeArea(.top) //Esto es para que la vista se pinte arriba tambien
             
-            Color.background
+            ItemsView()
                 .tabItem {
                     Image(systemName: "handbag")
                     Text("Items")
@@ -29,5 +30,5 @@ struct ChampionsView: View {
 
 
 #Preview {
-    ChampionsView()
+    MyTabView()
 }
