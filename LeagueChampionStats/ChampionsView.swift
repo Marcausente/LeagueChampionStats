@@ -9,10 +9,23 @@ import SwiftUI
 
 struct ChampionsView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView{
+            Color.background
+                .tabItem {
+                    Image(systemName: "figure.wave") //Icono puesto para los campeones
+                }
+                .edgesIgnoringSafeArea(.top) //Esto es para que la vista se pinte arriba tambien
+            
+            Color.background
+                .tabItem {
+                    Image(systemName: "figure.wave") //Icono puesto para los campeones
+                }
+                .edgesIgnoringSafeArea(.top) //Esto es para que la vista se pinte arriba tambien
+        }
     }
 }
 
+
 #Preview {
-    CampionsView()
+    ChampionsView()
 }
