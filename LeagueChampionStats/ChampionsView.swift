@@ -13,14 +13,16 @@ struct ChampionsView: View {
             Color.background
                 .tabItem {
                     Image(systemName: "figure.wave") //Icono puesto para los campeones
+                    Text("Champions")
                 }
                 .edgesIgnoringSafeArea(.top) //Esto es para que la vista se pinte arriba tambien
             
             Color.background
                 .tabItem {
-                    Image(systemName: "figure.wave") //Icono puesto para los campeones
+                    Image(systemName: "handbag")
+                    Text("Items")
                 }
-                .edgesIgnoringSafeArea(.top) //Esto es para que la vista se pinte arriba tambien
+                .edgesIgnoringSafeArea(.top)
         }
     }
 }
