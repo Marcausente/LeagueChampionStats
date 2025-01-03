@@ -1,21 +1,14 @@
-//
-//  ChampionsView.swift
-//  LeagueChampionStats
-//
-//  Created by Marc Fernández on 2/1/25.
-//
-
 import SwiftUI
 
 struct ChampionsView: View {
     init() {
-        // Esto configura la apariencia de la navbar de arriba
+        // Configuración de la apariencia de la barra de navegación
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor.white 
+        appearance.backgroundColor = UIColor.white
         appearance.titleTextAttributes = [
             .foregroundColor: UIColor.black,
-            .font: UIFont.systemFont(ofSize: 17, weight: .bold) // Texto estándar
+            .font: UIFont.systemFont(ofSize: 17, weight: .bold)
         ]
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
@@ -26,14 +19,34 @@ struct ChampionsView: View {
             ZStack {
                 Color.gray.opacity(0.2)
                     .ignoresSafeArea()
-                VStack {
-                    Text("Champions") //Puesto provisional aqui ira el contenido
+                VStack(spacing: 16) {
+                    Text("Champions")
                         .font(.title)
+                    
+                    // Grid de categorías
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        ForEach(ChampionCategory.allCases, id: \.self) { category in
+                            NavigationLink(destination: destination(for: category)) {
+                                ZStack {
+                                    Color.white
+                                        .cornerRadius(12)
+                                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                    
+                                    Text(category.rawValue)
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .padding()
+                                }
+                                .frame(height: 100)
+                            }
+                        }
+                    }
+                    .padding()
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Champions") //Titulo de la pagina en este caso champions
+                    Text("Champions")
                         .font(.headline)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
@@ -41,6 +54,33 @@ struct ChampionsView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    func destination(for category: ChampionCategory) -> some View {
+        switch category {
+        case .Mages:
+            MagesView()
+        case .Fighters:
+            FightersView()
+        case .Tanks:
+            TanksView()
+        case .Assassins:
+            AssasinsView()
+        case .Support:
+            SupportView()
+        case .Marksman:
+            MarksmanView()
+        }
+    }
+}
+
+enum ChampionCategory: String, CaseIterable {
+    case Mages = "Mages"
+    case Fighters = "Fighters"
+    case Tanks = "Tanks"
+    case Support = "Support"
+    case Assassins = "Assassins"
+    case Marksman = "Marksman"
 }
 
 #Preview {
