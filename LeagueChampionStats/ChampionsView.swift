@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ChampionsView: View {
     init() {
-        // Configuración de la apariencia de la barra de navegación
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.white
@@ -23,7 +22,6 @@ struct ChampionsView: View {
                     Text("Champions")
                         .font(.title)
                     
-                    // Grid de categorías
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                         ForEach(ChampionCategory.allCases, id: \.self) { category in
                             NavigationLink(destination: destination(for: category)) {

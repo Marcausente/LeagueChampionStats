@@ -13,6 +13,8 @@ struct SupportView: View {
     }
 }
 
+//AÑADIR SERAPHINE Y KARMA QUE ESTAN EN MAGOS POR ALGUN MOTIVO
+
 #Preview {
     SupportView()
 }
