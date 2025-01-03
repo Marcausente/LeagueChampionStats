@@ -2,9 +2,9 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationView {
+        NavigationView { // Solo envolvemos en NavigationView aquí
             VStack {
-                // Encabezado gris con imagen y texto
+                // Barra superior con icono y enlace para añadir items
                 HStack {
                     Image(systemName: "star.fill")
                         .resizable()
@@ -12,14 +12,14 @@ struct ContentView: View {
                         .frame(width: 20, height: 20)
                         .foregroundColor(.white)
                     
-                    Text("Header")
+                    Text("LCS - Items")
                         .font(.headline)
                         .foregroundColor(.white)
-                        .padding(.leading, 5) 
+                        .padding(.leading, 5)
                     
                     Spacer()
                     
-                    NavigationLink(destination: NuevaPantalla()) {
+                    NavigationLink(destination: AddNewItems()) {
                         Image(systemName: "plus")
                             .font(.title2)
                             .padding()
@@ -29,19 +29,19 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-                .background(Color.gray) // Fondo gris completo
+                .background(Color.gray)
                 .frame(maxWidth: .infinity)
                 
                 Spacer()
                 
-                // Botones cuadrados en la parte inferior
-                HStack(spacing: 0) { // Botones pegados
+                // Navegación hacia otras pantallas
+                HStack(spacing: 0) {
                     NavigationLink(destination: PrimeraPantalla()) {
                         Text("Champions")
-                            .frame(width: 100, height: 100) // Tamaño cuadrado
+                            .frame(maxWidth: .infinity, maxHeight: 60)
                             .background(Color.gray)
                             .foregroundColor(.white)
-                            .overlay( // Borde negro fino
+                            .overlay(
                                 Rectangle()
                                     .stroke(Color.black, lineWidth: 1)
                             )
@@ -49,15 +49,16 @@ struct ContentView: View {
                     
                     NavigationLink(destination: SegundaPantalla()) {
                         Text("Items")
-                            .frame(width: 100, height: 100) // Tamaño cuadrado
-                            .background(Color.green)
+                            .frame(maxWidth: .infinity, maxHeight: 60)
+                            .background(Color.gray)
                             .foregroundColor(.white)
-                            .overlay( // Borde negro fino
+                            .overlay(
                                 Rectangle()
                                     .stroke(Color.black, lineWidth: 1)
                             )
                     }
                 }
+                .frame(maxWidth: .infinity)
                 .padding()
             }
             .navigationBarTitle("ItemViews", displayMode: .inline)
@@ -68,9 +69,55 @@ struct ContentView: View {
 struct PrimeraPantalla: View {
     var body: some View {
         VStack {
-            Text("Bienvenido a la Primera Pantalla")
-                .font(.largeTitle)
-                .padding()
+            // Barra superior con icono y enlace para añadir items
+            HStack {
+                Image(systemName: "star.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(.white)
+                
+                Text("LCS - Champions")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.leading, 5)
+                
+                Spacer()
+            
+
+            }
+            .padding()
+            .background(Color.gray)
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
+            
+        
+            HStack(spacing: 0) {
+                NavigationLink(destination: PrimeraPantalla()) {
+                    Text("Champions")
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                }
+                
+                NavigationLink(destination: SegundaPantalla()) {
+                    Text("Items")
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
         }
         .navigationBarTitle("Primera Pantalla", displayMode: .inline)
     }
@@ -79,22 +126,64 @@ struct PrimeraPantalla: View {
 struct SegundaPantalla: View {
     var body: some View {
         VStack {
-            Text("Bienvenido a la Segunda Pantalla")
-                .font(.largeTitle)
-                .padding()
+            // Barra superior con icono y enlace para añadir items
+            HStack {
+                Image(systemName: "star.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(.white)
+                
+                Text("LCS - Items")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding(.leading, 5)
+                
+                Spacer()
+                
+                NavigationLink(destination: AddNewItems()) {
+                    Image(systemName: "plus")
+                        .font(.title2)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+            }
+            .padding()
+            .background(Color.gray)
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
+            
+            // Barra inferior con enlaces a otras pantallas
+            HStack(spacing: 0) {
+                NavigationLink(destination: PrimeraPantalla()) {
+                    Text("Champions")
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                }
+                
+                NavigationLink(destination: SegundaPantalla()) {
+                    Text("Items")
+                        .frame(maxWidth: .infinity, maxHeight: 60)
+                        .background(Color.gray)
+                        .foregroundColor(.white)
+                        .overlay(
+                            Rectangle()
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
         }
         .navigationBarTitle("Segunda Pantalla", displayMode: .inline)
-    }
-}
-
-struct NuevaPantalla: View {
-    var body: some View {
-        VStack {
-            Text("Nueva Pantalla")
-                .font(.largeTitle)
-                .padding()
-        }
-        .navigationBarTitle("Nueva Pantalla", displayMode: .inline)
     }
 }
 
