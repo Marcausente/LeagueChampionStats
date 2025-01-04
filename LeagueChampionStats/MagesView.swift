@@ -23,13 +23,13 @@ struct MagesView: View {
         Character(id: 19, name: "Brand, \n the Burning Vengeance", imageName: "BrandIcon"),
         Character(id: 20, name: "LeBlanc, \n the Deceiver", imageName: "LeeBlancIcon"),
         Character(id: 21, name: "Lissandra, \n the Ice Witch", imageName: "LissIcon"),
-        Character(id: 22, name: "Orianna, \n the Lady of Clockwork", imageName: "placeholder_image"),
-        Character(id: 23, name: "Syndra, \n the Dark Soverign", imageName: "placeholder_image"),
-        Character(id: 24, name: "Twisted Fate, \n the Card Master", imageName: "placeholder_image"),
-        Character(id: 25, name: "Veigar, \n the Tiny Master of Evil", imageName: "placeholder_image"),
-        Character(id: 26, name: "Vex, \n the Gloomist", imageName: "placeholder_image"),
-        Character(id: 27, name: "Zoe, \n the Aspect of Twilight", imageName: "placeholder_image"),
-        Character(id: 28, name: "Neeko, \n the Curious Chameleon", imageName: "placeholder_image"),
+        Character(id: 22, name: "Orianna, \n the Lady of Clockwork", imageName: "OriannaIcon"),
+        Character(id: 23, name: "Syndra, \n the Dark Soverign", imageName: "SyndraIcon"),
+        Character(id: 24, name: "Twisted Fate, \n the Card Master", imageName: "TwistedIcon"),
+        Character(id: 25, name: "Veigar, \n the Tiny Master of Evil", imageName: "VeigarIcon"),
+        Character(id: 26, name: "Vex, \n the Gloomist", imageName: "VexIcon"),
+        Character(id: 27, name: "Zoe, \n the Aspect of Twilight", imageName: "ZoeIcon"),
+        Character(id: 28, name: "Neeko, \n the Curious Chameleon", imageName: "NeekoIcon"),
     ]
     
     var body: some View {
