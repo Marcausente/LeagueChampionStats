@@ -37,7 +37,8 @@ struct FightersView: View {
         FighterChampion(id: 33, name: "Yone,\n the Unforgotten", imageName: "YoneIcon"),
         FighterChampion(id: 34, name: "Yorick,\n Shepherd of Souls", imageName: "YorickIcon"),
         FighterChampion(id: 35, name: "Warwick,\n the Uncaged Wrath of Zaun", imageName: "WarwickIcon"),
-        FighterChampion(id: 36, name: "Volibear,\n the Relentless Storm", imageName: "VolibearIcon")
+        FighterChampion(id: 36, name: "Volibear,\n the Relentless Storm", imageName: "VolibearIcon"),
+        FighterChampion(id: 37, name: "Briar,\n the Restrained Hunger", imageName: "BriarIcon")
     ]
     
     var body: some View {
