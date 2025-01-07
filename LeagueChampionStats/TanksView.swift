@@ -14,7 +14,7 @@ struct TanksView: View {
         TankCharacter(id: 3, name: "Nautilus,\n the Titan of the Depths", imageName: "NautilusIcon", lore: "Nautilus, un coloso de las profundidades, protege el océano y castiga a los que lo traicionan."),
         TankCharacter(id: 4, name: "Rammus, \n the Armordillo", imageName: "RammusIcon", lore: "Rammus, una criatura enigmática, avanza imparable con su caparazón blindado."),
         TankCharacter(id: 5, name: "Sion,\n the Undead Juggernaut", imageName: "SionIcon", lore: "Sion, un guerrero noxiano resucitado, destruye todo a su paso con una furia incontrolable."),
-        TankCharacter(id: 6, name: "Cho'Gath, \n the Terror of the Void", imageName: "ChoGathIcon", lore: "Cho'Gath, una abominación del Vacío, crece devorando todo lo que encuentra."),
+        TankCharacter(id: 6, name: "Cho'Gath, \n the Terror of the Void", imageName: "ChogathIcon", lore: "Cho'Gath, una abominación del Vacío, crece devorando todo lo que encuentra."),
         TankCharacter(id: 7, name: "Ornn, \n the Fire Below the Mountain", imageName: "OrnnIcon", lore: "Ornn, un semidiós Freljordiano, forja armas legendarias y protege a los suyos."),
         TankCharacter(id: 8, name: "Sejuani, \n Fury of the North", imageName: "SejuaniIcon", lore: "Sejuani, una líder feroz de Freljord, lucha incansablemente por la supervivencia de su tribu."),
         TankCharacter(id: 9, name: "Leona, \n the Radiant Dawn", imageName: "LeonaIcon", lore: "Leona, una guerrera de los Solari, blande el poder del sol para proteger a los inocentes."),
@@ -23,9 +23,9 @@ struct TanksView: View {
         TankCharacter(id: 12, name: "Dr. Mundo, \n the Madman of Zaun", imageName: "DrMundoIcon", lore: "Dr. Mundo, un loco imparable, causa caos en las calles de Zaun con su fuerza bruta."),
         TankCharacter(id: 13, name: "Poppy, \n Keeper of the Hammer", imageName: "PoppyIcon", lore: "Poppy, una heroína determinada, lleva un martillo místico para proteger la justicia en Runaterra."),
         TankCharacter(id: 14, name: "Galio, \n the Colossus", imageName: "GalioIcon", lore: "Galio, una gigantesca estatua viviente, se despierta para enfrentarse a la magia amenazante."),
-        TankCharacter(id: 15, name: "Amumu, \n the Sad Mummy", imageName: "AmumuIcon", lore: "Amumu, una momia maldita, busca compañía mientras vaga por el desierto eterno."),
+        TankCharacter(id: 15, name: "Amumu, \n the Sad Mummy", imageName: "AmmumuIcon", lore: "Amumu, una momia maldita, busca compañía mientras vaga por el desierto eterno."),
         TankCharacter(id: 16, name: "Alistar, \n the Minotaur", imageName: "AlistarIcon", lore: "Alistar, un guerrero imponente, usa su fuerza para proteger a los inocentes de la tiranía."),
-        TankCharacter(id: 17, name: "Tahm Kench, \n the River King", imageName: "TahmKenchIcon", lore: "Tahm Kench, un demonio embaucador, ofrece pactos peligrosos a los desesperados."),
+        TankCharacter(id: 17, name: "Tahm Kench, \n the River King", imageName: "TahmIcon", lore: "Tahm Kench, un demonio embaucador, ofrece pactos peligrosos a los desesperados."),
         TankCharacter(id: 18, name: "Gragas, \n the Rabble Rouser", imageName: "GragasIcon", lore: "Gragas, un amante de la cerveza y el caos, causa estragos en sus aventuras impredecibles."),
     ]
     
