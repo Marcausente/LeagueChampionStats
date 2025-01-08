@@ -4,7 +4,7 @@ struct MagesView: View {
     let characters = [
         Character(id: 1, name: "Hwei,\n the Visionary", imageName: "HweiIcon", lore: "Hwei, un estratega visionario, utiliza su astucia para liderar a su equipo hacia la victoria."),
         Character(id: 2, name: "Jayce,\n the Defender of Tomorrow", imageName: "JayceIcon", lore: "Jayce, un inventor brillante de Piltover, lucha con su martillo hextech para proteger su hogar."),
-        Character(id: 3, name: "Vel'Koz,\n the Eye of the Void", imageName: "VelkozIcon", lore: "Vel'Koz, una criatura del Vacío, busca conocimiento destruyendo todo a su paso."),
+        Character(id: 3, name: "Vel'Koz,\n the Eye of the Void", imageName: "VelkozIcon", lore: "Vel'Koz, una criatura del Vacío más profundo, busca conocimiento destruyendo todo a su paso."),
         Character(id: 4, name: "Xerath, \n the Magus Ascendant", imageName: "XerathIcon", lore: "Xerath, un mago Shurimano consumido por la magia, busca un poder ilimitado."),
         Character(id: 5, name: "Ziggs,\n the Hexplosives Expert", imageName: "ZiggsIcon", lore: "Ziggs, un yordle amante de las explosiones, trae caos y diversión con su arsenal hexplosivo."),
         Character(id: 6, name: "Anivia, \n the Cryophoenix", imageName: "AniviaIcon", lore: "Anivia, una antigua guardiana de Freljord, protege su tierra con el poder del hielo eterno."),
