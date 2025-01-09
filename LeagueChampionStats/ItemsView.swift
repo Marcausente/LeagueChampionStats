@@ -1,19 +1,14 @@
-//
-//  ItemsView.swift
-//  LeagueChampionStats
-//
-//  Created by Marc Fernández on 2/1/25.
-//
-
 import SwiftUI
 
 struct ItemsView: View {
     init() {
-        // Configuración de la apariencia de la barra de navegación
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = UIColor.white
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont.systemFont(ofSize: 17, weight: .bold)]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 17, weight: .bold)
+        ]
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
@@ -23,27 +18,121 @@ struct ItemsView: View {
             ZStack {
                 Color.gray.opacity(0.2)
                     .ignoresSafeArea()
-                VStack {
-                    Text("Items") // Provisional, aquí irá el contenido
+                VStack(spacing: 16) {
+                    Text("Items")
                         .font(.title)
+                    
+                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                        ForEach(ItemCategory.allCases, id: \.self) { category in
+                            NavigationLink(destination: destination(for: category)) {
+                                ZStack {
+                                    Color.white
+                                        .cornerRadius(12)
+                                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                    
+                                    Text(category.rawValue)
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                        .padding()
+                                }
+                                .frame(height: 100)
+                            }
+                        }
+                    }
+                    .padding()
                 }
             }
             .toolbar {
-                // Botón de añadir en la esquina superior derecha
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(destination: AddNewItems()) {
-                        Image(systemName: "square.and.pencil")
-                    }
-                }
-                // Título en la barra superior
                 ToolbarItem(placement: .principal) {
                     Text("Items")
                         .font(.headline)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                 }
+                // Botón "Add" en la barra de herramientas
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(destination: AddNewItems()) {
+                        Image(systemName: "plus")
+                            .font(.title)
+                    }
+                }
             }
         }
+    }
+    
+    @ViewBuilder
+    func destination(for category: ItemCategory) -> some View {
+        switch category {
+        case .Starter:
+            StarterItemsView()
+        case .Basic:
+            BasicItemsView()
+        case .Epic:
+            EpicItemsView()
+        case .Legendary:
+            LegendaryItemsView()
+        case .Utility:
+            UtilityItemsView()
+        case .Boots:
+            BootsItemsView()
+        }
+    }
+}
+
+enum ItemCategory: String, CaseIterable {
+    case Starter = "Starter"
+    case Basic = "Basic"
+    case Epic = "Epic"
+    case Legendary = "Legendary"
+    case Utility = "Utility"
+    case Boots = "Boots"
+}
+
+struct StarterItemsView: View {
+    var body: some View {
+        Text("Starter Items")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct BasicItemsView: View {
+    var body: some View {
+        Text("Basic Items")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct EpicItemsView: View {
+    var body: some View {
+        Text("Epic Items")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct LegendaryItemsView: View {
+    var body: some View {
+        Text("Legendary Items")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct UtilityItemsView: View {
+    var body: some View {
+        Text("Utility Items")
+            .font(.title)
+            .padding()
+    }
+}
+
+struct BootsItemsView: View {
+    var body: some View {
+        Text("Boots Items")
+            .font(.title)
+            .padding()
     }
 }
 
@@ -75,10 +164,10 @@ struct AddNewItems: View {
                 }
 
                 Section(header: Text("Attributes").font(.headline)) {
-                    SliderInputView(title: "Attack Damage", value: $attackDamage)
-                    SliderInputView(title: "Ability Power", value: $abilityPower)
-                    SliderInputView(title: "Armor", value: $armor)
-                    SliderInputView(title: "Magic Resist", value: $magicResist)
+                    SliderInputView(title: "Attack Damage (AD)", value: $attackDamage)
+                    SliderInputView(title: "Ability Power (AP)", value: $abilityPower)
+                    SliderInputView(title: "Armor (AR)", value: $armor)
+                    SliderInputView(title: "Magic Resist (MR)", value: $magicResist)
                 }
             }
             .navigationTitle("Add New Item")
@@ -124,12 +213,6 @@ struct SliderInputView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Slider(value: $value, in: 0...100, step: 1)
         }
-    }
-}
-
-struct AddNewItems_Previews: PreviewProvider {
-    static var previews: some View {
-        AddNewItems()
     }
 }
 

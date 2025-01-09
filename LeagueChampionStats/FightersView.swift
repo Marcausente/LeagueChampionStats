@@ -38,7 +38,8 @@ struct FightersView: View {
         FighterChampion(id: 34, name: "Yorick,\n Shepherd of Souls", imageName: "YorickIcon", lore: "Yorick, un guardián de las Islas de la Sombra, controla las almas para cumplir con su deber."),
         FighterChampion(id: 35, name: "Warwick,\n the Uncaged Wrath of Zaun", imageName: "WarwickIcon", lore: "Warwick, una bestia creada en Zaun, caza sin piedad con un olfato insaciable."),
         FighterChampion(id: 36, name: "Volibear,\n the Relentless Storm", imageName: "VolibearIcon", lore: "Volibear, un semidiós de Freljord, encarna la furia indomable de la tormenta."),
-        FighterChampion(id: 37, name: "Briar,\n the Restrained Hunger", imageName: "BriarIcon", lore: "Briar, una criatura de Zaun, lucha contra su hambre insaciable mientras busca controlarse.")
+        FighterChampion(id: 37, name: "Briar,\n the Restrained Hunger", imageName: "BriarIcon", lore: "Briar, una criatura de Zaun, lucha contra su hambre insaciable mientras busca controlarse."),
+        FighterChampion(id: 38, name: "Skarner,\n the Crystal Vanguard", imageName: "SkarnerIcon", lore: "Skarner, un guerrero cristalino de Shurima, protege su hogar y su pueblo de las amenazas con su fuerza imparable.")
     ]
     
     var body: some View {
