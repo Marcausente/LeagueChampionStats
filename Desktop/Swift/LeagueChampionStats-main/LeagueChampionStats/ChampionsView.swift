@@ -63,7 +63,7 @@ struct ChampionsView: View {
         case .Tanks:
             TanksView()
         case .Assassins:
-            AssasinsView()
+            AssassinView()
         case .Support:
             SupportView()
         case .Marksman:
