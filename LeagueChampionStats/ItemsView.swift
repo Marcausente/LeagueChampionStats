@@ -64,17 +64,17 @@ struct ItemsView: View {
     func destination(for category: ItemCategory) -> some View {
         switch category {
         case .Starter:
-            StarterItemsView()
+            StarterView()  // Vínculo a la vista externa StarterView
         case .Basic:
-            BasicItemsView()
+            BasicView()    // Vínculo a la vista externa BasicView
         case .Epic:
-            EpicItemsView()
+            EpicView()     // Vínculo a la vista externa EpicView
         case .Legendary:
-            LegendaryItemsView()
+            LegendaryView() // Vínculo a la vista externa LegendaryView
         case .Utility:
-            UtilityItemsView()
+            UtilityView()   // Vínculo a la vista externa UtilityView
         case .Boots:
-            BootsItemsView()
+            BootsView()     // Vínculo a la vista externa BootsView
         }
     }
 }
@@ -86,54 +86,6 @@ enum ItemCategory: String, CaseIterable {
     case Legendary = "Legendary"
     case Utility = "Utility"
     case Boots = "Boots"
-}
-
-struct StarterItemsView: View {
-    var body: some View {
-        Text("Starter Items")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct BasicItemsView: View {
-    var body: some View {
-        Text("Basic Items")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct EpicItemsView: View {
-    var body: some View {
-        Text("Epic Items")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct LegendaryItemsView: View {
-    var body: some View {
-        Text("Legendary Items")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct UtilityItemsView: View {
-    var body: some View {
-        Text("Utility Items")
-            .font(.title)
-            .padding()
-    }
-}
-
-struct BootsItemsView: View {
-    var body: some View {
-        Text("Boots Items")
-            .font(.title)
-            .padding()
-    }
 }
 
 struct AddNewItems: View {
