@@ -49,7 +49,7 @@ struct AssasinsView: View {
                 }
             }
             .navigationTitle("Assassins")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }
@@ -83,7 +83,7 @@ struct AssassinDetailView: View {
         }
         .padding()
         .navigationTitle(assassinCharacter.name)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

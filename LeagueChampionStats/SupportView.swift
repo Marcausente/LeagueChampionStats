@@ -46,7 +46,7 @@ struct SupportView: View {
                 }
             }
             .navigationTitle("Supports")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }
@@ -80,7 +80,7 @@ struct SupportDetailView: View {
         }
         .padding()
         .navigationTitle(supportCharacter.name)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

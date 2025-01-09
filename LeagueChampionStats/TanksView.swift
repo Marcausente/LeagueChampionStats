@@ -47,7 +47,7 @@ struct TanksView: View {
                 }
             }
             .navigationTitle("Tanks")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }
@@ -81,7 +81,7 @@ struct TankCharacterDetailView: View {
         }
         .padding()
         .navigationTitle(tankcharacter.name)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
