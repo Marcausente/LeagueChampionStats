@@ -83,7 +83,7 @@ struct AssassinDetailView: View {
         }
         .padding()
         .navigationTitle(assassinCharacter.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 

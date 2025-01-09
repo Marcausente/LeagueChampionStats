@@ -30,7 +30,9 @@ struct MagesView: View {
         Character(id: 26, name: "Vex, \n the Gloomist", imageName: "VexIcon", lore: "Vex, una joven yordle sombría, canaliza su apatía y melancolía para enfrentar a aquellos que la irritan."),
         Character(id: 27, name: "Zoe, \n the Aspect of Twilight", imageName: "ZoeIcon", lore: "Zoe, una traviesa mensajera cósmica, altera el curso de la realidad con su curiosidad despreocupada."),
         Character(id: 28, name: "Neeko, \n the Curious Chameleon", imageName: "NeekoIcon", lore: "Neeko, una vastaya camaleónica, se mezcla con otros para observar y comprender el mundo con inocente curiosidad."),
-        Character(id: 29, name: "Fiddlesticks, \n the Ancient Fear", imageName: "FiddleIcon", lore: "Fiddlesticks, una pesadilla hecha realidad, caza en las sombras y se alimenta de los temores más profundos de los mortales.")
+        Character(id: 29, name: "Fiddlesticks, \n the Ancient Fear", imageName: "FiddleIcon", lore: "Fiddlesticks, una pesadilla hecha realidad, caza en las sombras y se alimenta de los temores más profundos de los mortales."),
+        Character(id: 30, name: "Zyra, \n Rise of the Thorns", imageName: "ZyraIcon", lore: "Zyra, una planta viviente, utiliza su control de la naturaleza para dominar el campo de batalla."),
+        Character(id: 31, name: "Heimerdinger, \n the Revered Inventor", imageName: "HeimerdingerIcon", lore: "Heimerdinger, un inventor prodigioso de Piltover, lucha utilizando su genio científico y sus invenciones.")
     ]
     
     var body: some View {
@@ -43,7 +45,7 @@ struct MagesView: View {
                             .frame(width: 50, height: 50)
                             .clipShape(Circle())
                         Spacer()
-                                .frame(width: 15)
+                            .frame(width: 15)
                         Text(character.name)
                             .font(.headline)
                     }
@@ -51,7 +53,7 @@ struct MagesView: View {
                 }
             }
             .navigationTitle("Mages")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }

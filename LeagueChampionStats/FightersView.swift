@@ -47,7 +47,7 @@ struct FightersView: View {
                 FighterChampionRow(champion: champion)
             }
             .navigationTitle("Fighters")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.large)
         }
     }
 }
