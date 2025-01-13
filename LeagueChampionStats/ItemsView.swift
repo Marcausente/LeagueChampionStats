@@ -91,40 +91,53 @@ enum ItemCategory: String, CaseIterable {
 struct AddNewItems: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var itemName: String = ""
-    @State private var selectedCategory: String = "Option 1"
-    @State private var attackDamage: Double = 50
-    @State private var abilityPower: Double = 50
-    @State private var armor: Double = 50
-    @State private var magicResist: Double = 50
+    @State private var selectedCategory: ItemCategory = .Starter
+    @State private var attackDamage: Double = 0
+    @State private var abilityPower: Double = 0
+    @State private var armor: Double = 0
+    @State private var magicResist: Double = 0
     @State private var showAlert: Bool = false
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Item Details").font(.headline)) {
-                    // Campo de texto para Item Name
-                    TextField("Enter item name", text: $itemName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.vertical, 5)
-
-                    Picker("Category", selection: $selectedCategory) {
-                        Text("Option 1").tag("Option 1")
-                        Text("Option 2").tag("Option 2")
-                        Text("Option 3").tag("Option 3")
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Campo de texto para el nombre del ítem
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Item Name")
+                            .font(.headline)
+                        TextField("Enter item name", text: $itemName)
+                            .padding()
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
                     }
-                    .pickerStyle(MenuPickerStyle())
-                }
 
-                Section(header: Text("Attributes").font(.headline)) {
-                    SliderInputView(title: "Attack Damage (AD)", value: $attackDamage)
-                    SliderInputView(title: "Ability Power (AP)", value: $abilityPower)
-                    SliderInputView(title: "Armor (AR)", value: $armor)
-                    SliderInputView(title: "Magic Resist (MR)", value: $magicResist)
+                    // Selector de categoría
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Category")
+                            .font(.headline)
+                        Picker("Category", selection: $selectedCategory) {
+                            ForEach(ItemCategory.allCases, id: \.self) { category in
+                                Text(category.rawValue).tag(category)
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                    }
+
+                    // Atributos con sliders
+                    VStack(alignment: .leading, spacing: 16) {
+                        SliderInputView(title: "Attack Damage (AD)", value: $attackDamage)
+                        SliderInputView(title: "Ability Power (AP)", value: $abilityPower)
+                        SliderInputView(title: "Armor (AR)", value: $armor)
+                        SliderInputView(title: "Magic Resist (MR)", value: $magicResist)
+                    }
                 }
+                .padding()
             }
             .navigationTitle("Add New Item")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // Botón "Add" en la barra de herramientas
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Add") {
                         createNewItem()
@@ -135,13 +148,14 @@ struct AddNewItems: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Success"),
-                    message: Text("Item '\(itemName)' created successfully!"),
-                    dismissButton: .default(Text("OK"), action: {
+                    message: Text("Item '\(itemName)' added to \(selectedCategory.rawValue)!"),
+                    dismissButton: .default(Text("OK")) {
                         presentationMode.wrappedValue.dismiss()
-                    })
+                    }
                 )
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle()) // Forzar comportamiento de pantalla completa
     }
 
     private func createNewItem() {
@@ -150,23 +164,29 @@ struct AddNewItems: View {
             showAlert = true
             return
         }
+        // Aquí puedes añadir la lógica para guardar el ítem en la categoría seleccionada
         showAlert = true
     }
 }
+    
+    struct SliderInputView: View {
+        var title: String
+        @Binding var value: Double
 
-struct SliderInputView: View {
-    var title: String
-    @Binding var value: Double
-
-    var body: some View {
-        VStack {
-            Text("\(title): \(Int(value))")
-                .font(.subheadline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            Slider(value: $value, in: 0...100, step: 1)
+        var body: some View {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("\(title): \(Int(value))")
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Slider(value: $value, in: 0...100, step: 1)
+                    .accentColor(.blue)
+            }
+            .padding()
+            .background(Color(UIColor.secondarySystemBackground))
+            .cornerRadius(10)
         }
     }
-}
+
 
 #Preview {
     ItemsView()

@@ -25,7 +25,7 @@ struct SupportView: View {
         SupportCharacter(id: 14, name: "Pyke, \n the Bloodharbor Ripper", imageName: "PykeIcon", lore: "Pyke, un espíritu vengativo, cumple su misión como soporte letal en la Grieta."),
         SupportCharacter(id: 15, name: "Zilean, \n the Chronokeeper", imageName: "ZileanIcon", lore: "Zilean, un maestro del tiempo, manipula el destino para cambiar el curso de las batallas."),
         SupportCharacter(id: 16, name: "Blitzcrank, \n the Great Steam Golem", imageName: "BlitzcrankIcon", lore: "Blitzcrank, un golem de vapor, usa su fuerza para proteger y ayudar."),
-        SupportCharacter(id: 17, name: "Renata Glasc, \n the Chem-Baroness", imageName: "RenataIcon", lore: "Renata, una baronesa química, controla la batalla con su intelecto y manipulación.")
+        SupportCharacter(id: 17, name: "Renata Glasc, \n the Chem-Baroness", imageName: "RenataglascIcon", lore: "Renata, una baronesa química, controla la batalla con su intelecto y manipulación.")
     ]
     
     var body: some View {

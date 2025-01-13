@@ -12,6 +12,7 @@ struct LeagueChampionStatsApp: App {
     var body: some Scene {
         WindowGroup {
             MyTabView()
+                .preferredColorScheme(ColorScheme.light)
         }
     }
 }
