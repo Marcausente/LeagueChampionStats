@@ -407,7 +407,7 @@ struct ItemListView: View {
             VStack(alignment: .leading) {
                 Text(item.name)
                     .font(.headline)
-                Text("AD: \(item.attackDamage), AP: \(item.abilityPower), AR: \(item.armor), MR: \(item.magicResist)")
+                Text("AD: \(Int(item.attackDamage)), AP: \(Int(item.abilityPower)), AR: \(Int(item.armor)), MR: \(Int(item.magicResist))")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
