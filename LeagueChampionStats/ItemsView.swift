@@ -189,10 +189,10 @@ class ItemStore: ObservableObject {
         ]
         bootsItems = [
             Item(name: "Grebas del Berserker", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
-            Item(name: "Botas de Rapidez", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas de Movilidad", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
             Item(name: "Botas Jonias de Lucidez", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
-            Item(name: "Pisadas de Mercurio", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
-            Item(name: "Chaleco de Acero Platinado", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas de Mercurio", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Punteras de Acero Revestido", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
             Item(name: "Zapatos del Hechicero", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
             Item(name: "Suelas Simbióticas", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
             Item(name: "Botas", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
@@ -407,7 +407,7 @@ struct ItemListView: View {
             VStack(alignment: .leading) {
                 Text(item.name)
                     .font(.headline)
-                Text("Attack Damage: \(item.attackDamage), Ability Power: \(item.abilityPower), Armor: \(item.armor), Magic Resist: \(item.magicResist)")
+                Text("AD: \(item.attackDamage), AP: \(item.abilityPower), AR: \(item.armor), MR: \(item.magicResist)")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
