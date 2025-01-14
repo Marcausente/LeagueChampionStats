@@ -201,13 +201,14 @@ struct ItemListView: View {
         .navigationTitle(title)
     }
 }
+
 struct ItemDetailView: View {
     let item: Item
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(item.name)
+                Text(item.name) // Puedes mantenerlo aquí si quieres mostrar el nombre en el cuerpo
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
@@ -235,9 +236,11 @@ struct ItemDetailView: View {
             }
             .padding()
         }
-        .navigationTitle(item.name)
+        .navigationTitle("Detalles del Ítem") // Título fijo
+        .navigationBarTitleDisplayMode(.inline) // Estilo compacto
     }
 }
+
 struct ItemsView: View {
     @StateObject private var itemStore = ItemStore() // Estado compartido
     @State private var showAddItemView = false  // Para controlar la presentación del formulario
@@ -460,7 +463,7 @@ struct AddNewItems: View {
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text(item.name)
+                    Text("item.name")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
@@ -488,7 +491,7 @@ struct AddNewItems: View {
                 }
                 .padding()
             }
-            .navigationTitle(item.name)
+            .navigationTitle("item.name")
         }
     }
     
