@@ -171,6 +171,24 @@ class ItemStore: ObservableObject {
             Item(name: "Hidra Titanica", category: .Legendary, attackDamage: 60, abilityPower: 0, armor: 0, magicResist: 0)
         ]
         
+        utilityItems = [
+            Item(name: "Jugo Cappa", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Guardián de Control", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Avaricia", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Fuerza", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Hierro", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Habilidad", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Brujería", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Elixir de Ira", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Ojo del Heraldo", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Poción de Vida", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Poro-Snax", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Poción Reutilizable", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Galleta Total de Voluntad Eterna", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Tu Parte", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0)
+        ]
+        
+        
     
     }
     
