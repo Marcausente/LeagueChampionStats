@@ -38,7 +38,7 @@ struct ChampionsView: View {
                                 .frame(height: 100)
                             }
                         }
-                    }
+                }
                     .padding()
                 }
             }
