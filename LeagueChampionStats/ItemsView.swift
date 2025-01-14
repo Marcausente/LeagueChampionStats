@@ -187,7 +187,17 @@ class ItemStore: ObservableObject {
             Item(name: "Galleta Total de Voluntad Eterna", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
             Item(name: "Tu Parte", category: .Utility, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0)
         ]
-        
+        bootsItems = [
+            Item(name: "Grebas del Berserker", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas de Rapidez", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas Jonias de Lucidez", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Pisadas de Mercurio", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Chaleco de Acero Platinado", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Zapatos del Hechicero", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Suelas Simbióticas", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0),
+            Item(name: "Botas Ligeramente Mágicas", category: .Boots, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0)
+        ]
         
     
     }
