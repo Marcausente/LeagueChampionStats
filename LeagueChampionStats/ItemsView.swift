@@ -64,7 +64,7 @@ class ItemStore: ObservableObject {
         ]
 
         
-        var epicItems = [
+        epicItems = [
             Item(name: "Égida de la Legión", category: .Epic, attackDamage: 0, abilityPower: 0, armor: 30, magicResist: 30, price: 2900, background: "A legendary shield that provides both armor and magic resist, perfect for tanks in the late game."),
             Item(name: "Susurro Etéreo", category: .Epic, attackDamage: 0, abilityPower: 30, armor: 0, magicResist: 0, price: 2500, background: "An item that grants a large boost in ability power, perfect for mages focused on magic damage."),
             Item(name: "Ceniza de Bami", category: .Epic, attackDamage: 0, abilityPower: 0, armor: 0, magicResist: 0, price: 1200, background: "A powerful item for jungle champions, providing health regeneration and area-of-effect damage."),
@@ -92,7 +92,7 @@ class ItemStore: ObservableObject {
             Item(name: "Vibrador Nocturno", category: .Epic, attackDamage: 40, abilityPower: 0, armor: 0, magicResist: 0, price: 2600, background: "A powerful weapon that grants high attack damage and a unique passive to increase attacks' speed.")
         ]
         
-        let legendaryItems = [
+        legendaryItems = [
             Item(name: "Máscara Abisal", category: .Legendary, attackDamage: 0, abilityPower: 0, armor: 30, magicResist: 60, price: 3200, background: "A mask of great power that absorbs the life essence of enemies."),
             Item(name: "Cadenas de Anatema", category: .Legendary, attackDamage: 0, abilityPower: 0, armor: 40, magicResist: 0, price: 2700, background: "Chains that bind the enemy, cursing them with their own suffering."),
             Item(name: "Báculo del Arcángel", category: .Legendary, attackDamage: 0, abilityPower: 70, armor: 0, magicResist: 0, price: 3000, background: "A staff imbued with celestial power that grows in strength with every spell cast."),
