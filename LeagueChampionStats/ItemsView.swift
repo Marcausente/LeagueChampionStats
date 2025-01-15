@@ -417,9 +417,10 @@ struct AddNewItems: View {
     @State private var abilityPower: Double = 0
     @State private var armor: Double = 0
     @State private var magicResist: Double = 0
-    @State private var price: String = "" // Para el precio
-    @State private var background: String = "" // Para el background
+    @State private var background: String = ""
+    @State private var priceString: String = ""
     @State private var showAlert: Bool = false
+    @State private var alertMessage: String = ""
     
     var body: some View {
         NavigationView {
@@ -444,34 +445,31 @@ struct AddNewItems: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                     }
-
-                    // Campo de texto para el precio
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Price")
-                            .font(.headline)
-                        TextField("Enter item price", text: $price)
-                            .keyboardType(.decimalPad)
-                            .padding()
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .cornerRadius(10)
-                    }
-
-                    // Campo de texto para el background
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("Background")
-                            .font(.headline)
-                        TextEditor(text: $background)
-                            .padding()
-                            .background(Color(UIColor.secondarySystemBackground))
-                            .cornerRadius(10)
-                            .frame(height: 100) // Ajusta la altura según lo necesites
-                    }
                     
                     VStack(spacing: 16) {
                         SliderInputView(title: "Attack Damage (AD)", value: $attackDamage)
                         SliderInputView(title: "Ability Power (AP)", value: $abilityPower)
                         SliderInputView(title: "Armor (AR)", value: $armor)
                         SliderInputView(title: "Magic Resist (MR)", value: $magicResist)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Background")
+                            .font(.headline)
+                        TextField("Enter item background", text: $background)
+                            .padding()
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Price")
+                            .font(.headline)
+                        TextField("Enter item price", text: $priceString)
+                            .padding()
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                            .keyboardType(.decimalPad)
                     }
                 }
                 .padding()
@@ -496,7 +494,7 @@ struct AddNewItems: View {
             .alert(isPresented: $showAlert) {
                 Alert(
                     title: Text("Item Added"),
-                    message: Text("Item '\(itemName)' added to \(selectedCategory.rawValue)"),
+                    message: Text(alertMessage),
                     dismissButton: .default(Text("OK")) {
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -506,10 +504,21 @@ struct AddNewItems: View {
     }
     
     private func addItem() {
-        guard !itemName.isEmpty, !price.isEmpty, let itemPrice = Double(price), !background.isEmpty else {
-            return // Asegurarse de que los campos no estén vacíos
+        // Validación de los campos
+        guard !itemName.isEmpty, !priceString.isEmpty, !background.isEmpty else {
+            alertMessage = "Name, Background, and Price are required."
+            showAlert = true
+            return
         }
-
+        
+        // Validar que el precio sea un número válido
+        guard let price = Double(priceString) else {
+            alertMessage = "Price must be a valid number."
+            showAlert = true
+            return
+        }
+        
+        // Crear el nuevo item
         let newItem = Item(
             name: itemName,
             category: selectedCategory,
@@ -517,11 +526,12 @@ struct AddNewItems: View {
             abilityPower: abilityPower,
             armor: armor,
             magicResist: magicResist,
-            price: itemPrice, // Usamos el precio ingresado
-            background: background // Usamos el background ingresado
+            price: price,
+            background: background
         )
         
         itemStore.addItem(newItem)
+        alertMessage = "Item '\(itemName)' added to \(selectedCategory.rawValue)"
         showAlert = true
     }
     
@@ -599,7 +609,6 @@ struct AddNewItems: View {
         }
     }
 }
-    
     #Preview {
         ItemsView()
     }
