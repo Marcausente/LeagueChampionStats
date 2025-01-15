@@ -192,6 +192,7 @@ struct ItemListView: View {
                 VStack(alignment: .leading) {
                     Text(item.name)
                         .font(.headline)
+                        .fontWeight(.bold)
                 
                     HStack {
                         Text("AD: \(Int(item.attackDamage))")
