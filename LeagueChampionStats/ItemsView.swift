@@ -192,9 +192,22 @@ struct ItemListView: View {
                 VStack(alignment: .leading) {
                     Text(item.name)
                         .font(.headline)
-                    Text("AD: \(Int(item.attackDamage)), AP: \(Int(item.abilityPower)), AR: \(Int(item.armor)), MR: \(Int(item.magicResist))")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
+                
+                    HStack {
+                        Text("AD: \(Int(item.attackDamage))")
+                            .foregroundColor(.red)
+                            .fontWeight(.bold)
+                        Text("AP: \(Int(item.abilityPower))")
+                            .foregroundColor(.blue)
+                            .fontWeight(.bold)
+                        Text("AR: \(Int(item.armor))")
+                            .foregroundColor(.green)
+                            .fontWeight(.bold)
+                        Text("MR: \(Int(item.magicResist))")
+                            .foregroundColor(.purple)
+                            .fontWeight(.bold)
+                            
+                    }
                 }
             }
         }
@@ -284,7 +297,7 @@ struct ItemsView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 24) {
-                    Text("Items")
+                    Text("Items Categories")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.black)

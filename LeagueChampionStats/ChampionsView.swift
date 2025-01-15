@@ -21,7 +21,7 @@ struct ChampionsView: View {
                     .ignoresSafeArea()
                 
                 VStack(spacing: 24) {
-                    Text("Champions")
+                    Text("Champions Categories")
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
