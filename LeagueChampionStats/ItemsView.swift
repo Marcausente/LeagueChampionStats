@@ -207,39 +207,57 @@ struct ItemDetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 20) {
                 Text(item.name) // Puedes mantenerlo aquí si quieres mostrar el nombre en el cuerpo
                     .font(.largeTitle)
                     .fontWeight(.bold)
+                    .foregroundColor(.black)
 
                 Text("Category: \(item.category.rawValue)")
                     .font(.headline)
+                    .foregroundColor(.gray)
 
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text("Stats:")
                         .font(.headline)
-                    Text("Attack Damage: \(Int(item.attackDamage))")
-                    Text("Ability Power: \(Int(item.abilityPower))")
-                    Text("Armor: \(Int(item.armor))")
-                    Text("Magic Resist: \(Int(item.magicResist))")
+                        .foregroundColor(.black)
+
+                    Group {
+                        Text("Attack Damage: \(Int(item.attackDamage))")
+                        Text("Ability Power: \(Int(item.abilityPower))")
+                        Text("Armor: \(Int(item.armor))")
+                        Text("Magic Resist: \(Int(item.magicResist))")
+                    }
+                    .font(.body)
+                    .foregroundColor(.gray)
                 }
 
                 Text("Price: \(String(format: "%.2f", item.price)) Gold")
                     .font(.headline)
+                    .foregroundColor(.black)
                     .padding(.top)
 
                 Text("Background:")
                     .font(.headline)
+                    .foregroundColor(.black)
+
                 Text(item.background)
                     .font(.body)
                     .foregroundColor(.gray)
+                    .padding(.top, 8)
             }
             .padding()
+            .background(Color.white) // Fondo blanco para el contenido
+            .cornerRadius(16) // Bordes redondeados
+            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2) // Sombra para el efecto visual
         }
         .navigationTitle("Detalles del Ítem") // Título fijo
         .navigationBarTitleDisplayMode(.inline) // Estilo compacto
+        .background(Color.gray.opacity(0.2).ignoresSafeArea()) // Fondo gris suave fuera del contenido
     }
 }
+
+
 
 struct ItemsView: View {
     @StateObject private var itemStore = ItemStore() // Estado compartido
@@ -260,30 +278,66 @@ struct ItemsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Fondo gris suave
                 Color.gray.opacity(0.2)
                     .ignoresSafeArea()
-                VStack(spacing: 16) {
+                
+                VStack(spacing: 24) {
                     Text("Items")
                         .font(.title)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
                     
-                    LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+                    LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 20) {
                         ForEach(ItemCategory.allCases, id: \.self) { category in
                             NavigationLink(destination: destination(for: category)) {
                                 ZStack {
                                     Color.white
-                                        .cornerRadius(12)
-                                        .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+                                        .cornerRadius(16)
+                                        .frame(height: 160) // Hacer las tarjetas más grandes
                                     
-                                    Text(category.rawValue)
-                                        .font(.headline)
-                                        .foregroundColor(.black)
-                                        .padding()
+                                    VStack {
+                                        // Iconos representativos para cada categoría de ítem
+                                        switch category {
+                                        case .Starter:
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(.yellow)
+                                                .font(.title2)
+                                        case .Basic:
+                                            Image(systemName: "circle.fill")
+                                                .foregroundColor(.blue)
+                                                .font(.title2)
+                                        case .Epic:
+                                            Image(systemName: "flame.fill")
+                                                .foregroundColor(.red)
+                                                .font(.title2)
+                                        case .Legendary:
+                                            Image(systemName: "crown.fill")
+                                                .foregroundColor(.purple)
+                                                .font(.title2)
+                                        case .Utility:
+                                            Image(systemName: "gearshape.fill")
+                                                .foregroundColor(.green)
+                                                .font(.title2)
+                                        case .Boots:
+                                            Image(systemName: "shoeprints.fill")
+                                                .foregroundColor(.brown)
+                                                .font(.title2)
+                                        }
+                                        
+                                        Text(category.rawValue)
+                                            .font(.headline)
+                                            .foregroundColor(.black)
+                                            .padding(.top, 8)
+                                    }
+                                    .padding(16)
                                 }
-                                .frame(height: 100)
+                                .scaleEffect(0.98) // Escala sutil para el efecto de interacción
+                                .animation(.spring(), value: category)
                             }
                         }
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
             }
             .toolbar {
@@ -292,6 +346,7 @@ struct ItemsView: View {
                         .font(.headline)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
+                        .foregroundColor(.black)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
