@@ -456,10 +456,11 @@ struct AddNewItems: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Background")
                             .font(.headline)
-                        TextField("Enter item background", text: $background)
+                        TextEditor(text: $background)
                             .padding()
                             .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(10)
+                            .frame(height: 100) // Ajusta el alto del TextEditor
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
@@ -609,6 +610,7 @@ struct AddNewItems: View {
         }
     }
 }
+
     #Preview {
         ItemsView()
     }
