@@ -439,6 +439,15 @@ struct AddNewItems: View {
             }
             .navigationTitle("Add New Item")
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        presentationMode.wrappedValue.dismiss() // Cierra la vista
+                    }) {
+                        Image(systemName: "arrow.left") // Flecha de retroceso
+                            .font(.title)
+                            .foregroundColor(.blue)
+                                    }
+                                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Add") {
                         addItem()
