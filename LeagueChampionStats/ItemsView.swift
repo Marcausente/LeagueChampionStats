@@ -208,7 +208,7 @@ struct ItemDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text(item.name) // Puedes mantenerlo aquí si quieres mostrar el nombre en el cuerpo
+                Text(item.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
@@ -247,13 +247,14 @@ struct ItemDetailView: View {
                     .padding(.top, 8)
             }
             .padding()
+            .frame(maxWidth: .infinity) // Asegura que el contenido se ajuste al ancho disponible
             .background(Color.white) // Fondo blanco para el contenido
             .cornerRadius(16) // Bordes redondeados
             .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2) // Sombra para el efecto visual
         }
-        .navigationTitle("Detalles del Ítem") // Título fijo
+        .navigationTitle("Detalles del Ítem")
         .navigationBarTitleDisplayMode(.inline) // Estilo compacto
-        .background(Color.gray.opacity(0.2).ignoresSafeArea()) // Fondo gris suave fuera del contenido
+        .background(Color.gray.opacity(0.2).ignoresSafeArea()) // Fondo gris suave fuera del contenido, solo fuera del ScrollView
     }
 }
 
