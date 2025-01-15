@@ -195,16 +195,16 @@ struct ItemListView: View {
                 
                     HStack {
                         Text("AD: \(Int(item.attackDamage))")
-                            .foregroundColor(.red)
+                            .foregroundColor(.orange)
                             .fontWeight(.bold)
                         Text("AP: \(Int(item.abilityPower))")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.purple)
                             .fontWeight(.bold)
                         Text("AR: \(Int(item.armor))")
                             .foregroundColor(.green)
                             .fontWeight(.bold)
                         Text("MR: \(Int(item.magicResist))")
-                            .foregroundColor(.purple)
+                            .foregroundColor(.cyan)
                             .fontWeight(.bold)
                             
                     }
