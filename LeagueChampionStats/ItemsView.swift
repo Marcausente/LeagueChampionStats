@@ -417,6 +417,8 @@ struct AddNewItems: View {
     @State private var abilityPower: Double = 0
     @State private var armor: Double = 0
     @State private var magicResist: Double = 0
+    @State private var price: String = "" // Para el precio
+    @State private var background: String = "" // Para el background
     @State private var showAlert: Bool = false
     
     var body: some View {
@@ -442,6 +444,28 @@ struct AddNewItems: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                     }
+
+                    // Campo de texto para el precio
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Price")
+                            .font(.headline)
+                        TextField("Enter item price", text: $price)
+                            .keyboardType(.decimalPad)
+                            .padding()
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    }
+
+                    // Campo de texto para el background
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Background")
+                            .font(.headline)
+                        TextEditor(text: $background)
+                            .padding()
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                            .frame(height: 100) // Ajusta la altura según lo necesites
+                    }
                     
                     VStack(spacing: 16) {
                         SliderInputView(title: "Attack Damage (AD)", value: $attackDamage)
@@ -461,8 +485,8 @@ struct AddNewItems: View {
                         Image(systemName: "arrow.left") // Flecha de retroceso
                             .font(.title)
                             .foregroundColor(.blue)
-                                    }
-                                }
+                    }
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Add") {
                         addItem()
@@ -482,25 +506,10 @@ struct AddNewItems: View {
     }
     
     private func addItem() {
-        guard !itemName.isEmpty else { return }
-        
-        // Aquí asignamos valores predeterminados o basados en la categoría para los nuevos campos
-        let price: Double
-        let background: String
-        
-        // Asignamos valores predeterminados según la categoría o el nombre del ítem
-        switch selectedCategory {
-        case .Utility:
-            price = 500.0  // Cambiado a Double
-            background = "Un objeto útil con efectos especiales."
-        case .Boots:
-            price = 700.0  // Cambiado a Double
-            background = "Un par de botas con propiedades mágicas."
-        default:
-            price = 400.0  // Cambiado a Double
-            background = "Un objeto desconocido."
+        guard !itemName.isEmpty, !price.isEmpty, let itemPrice = Double(price), !background.isEmpty else {
+            return // Asegurarse de que los campos no estén vacíos
         }
-        
+
         let newItem = Item(
             name: itemName,
             category: selectedCategory,
@@ -508,8 +517,8 @@ struct AddNewItems: View {
             abilityPower: abilityPower,
             armor: armor,
             magicResist: magicResist,
-            price: price,
-            background: background
+            price: itemPrice, // Usamos el precio ingresado
+            background: background // Usamos el background ingresado
         )
         
         itemStore.addItem(newItem)
@@ -542,7 +551,7 @@ struct AddNewItems: View {
         var body: some View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("item.name")
+                    Text(item.name)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
@@ -570,7 +579,7 @@ struct AddNewItems: View {
                 }
                 .padding()
             }
-            .navigationTitle("item.name")
+            .navigationTitle(item.name)
         }
     }
     
