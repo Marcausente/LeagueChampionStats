@@ -494,7 +494,7 @@ struct AddNewItems: View {
             }
             .alert(isPresented: $showAlert) {
                 Alert(
-                    title: Text("Item Added"),
+                    title: Text("Añadir un item"),
                     message: Text(alertMessage),
                     dismissButton: .default(Text("OK")) {
                         presentationMode.wrappedValue.dismiss()
@@ -507,14 +507,14 @@ struct AddNewItems: View {
     private func addItem() {
         // Validación de los campos
         guard !itemName.isEmpty, !priceString.isEmpty, !background.isEmpty else {
-            alertMessage = "Name, Background, and Price are required."
+            alertMessage = "Es obligatorio rellenar el nombre, precio y Background"
             showAlert = true
             return
         }
         
         // Validar que el precio sea un número válido
         guard let price = Double(priceString) else {
-            alertMessage = "Price must be a valid number."
+            alertMessage = "El precio tiene que ser un numero valido"
             showAlert = true
             return
         }
@@ -532,7 +532,7 @@ struct AddNewItems: View {
         )
         
         itemStore.addItem(newItem)
-        alertMessage = "Item '\(itemName)' added to \(selectedCategory.rawValue)"
+        alertMessage = "Item '\(itemName)' añadido a \(selectedCategory.rawValue)"
         showAlert = true
     }
     
