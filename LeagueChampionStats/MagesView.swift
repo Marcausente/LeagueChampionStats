@@ -1,93 +1,224 @@
 import SwiftUI
 
 struct MagesView: View {
-    let characters = [
-        Character(id: 1, name: "Hwei,\n the Visionary", imageName: "HweiIcon", lore: "Hwei, un estratega visionario, utiliza su astucia para liderar a su equipo hacia la victoria."),
-        Character(id: 2, name: "Jayce,\n the Defender of Tomorrow", imageName: "JayceIcon", lore: "Jayce, un inventor brillante de Piltover, lucha con su martillo hextech para proteger su hogar."),
-        Character(id: 3, name: "Vel'Koz,\n the Eye of the Void", imageName: "VelkozIcon", lore: "Vel'Koz, una criatura del Vacío más profundo, busca conocimiento destruyendo todo a su paso."),
-        Character(id: 4, name: "Xerath, \n the Magus Ascendant", imageName: "XerathIcon", lore: "Xerath, un mago Shurimano consumido por la magia, busca un poder ilimitado."),
-        Character(id: 5, name: "Ziggs,\n the Hexplosives Expert", imageName: "ZiggsIcon", lore: "Ziggs, un yordle amante de las explosiones, trae caos y diversión con su arsenal hexplosivo."),
-        Character(id: 6, name: "Anivia, \n the Cryophoenix", imageName: "AniviaIcon", lore: "Anivia, una antigua guardiana de Freljord, protege su tierra con el poder del hielo eterno."),
-        Character(id: 7, name: "Aurelion Sol, \n the Star Forger", imageName: "AurelionIcon", lore: "Aurelion Sol, un dragón celestial, crea estrellas mientras busca recuperar su libertad."),
-        Character(id: 8, name: "Cassiopeia, \n the Serpent's Embrace", imageName: "CassioIcon", lore: "Cassiopeia, una hechicera maldita de Noxus, utiliza venenos mortales para dominar a sus enemigos."),
-        Character(id: 9, name: "Karthus, \n the Deathsinger", imageName: "KarthusIcon", lore: "Karthus, el heraldo de la muerte, celebra la eternidad con una sinfonía de almas."),
-        Character(id: 10, name: "Malzahar, \n the Prophet of Void", imageName: "MalzaIcon", lore: "Malzahar, un vidente de Shurima, busca abrir un portal para que el Vacío consuma el mundo."),
-        Character(id: 11, name: "Swain, \n the Noxian Grand General", imageName: "SwainIcon", lore: "Swain, el líder de Noxus, manipula las almas y el destino de su nación con una visión implacable."),
-        Character(id: 12, name: "Rumble, \n the Mechanized Menace", imageName: "RumbleIcon", lore: "Rumble, un yordle inventor, lucha con un mecha que él mismo creó, desatando caos en sus enemigos con llamas y rayos."),
-        Character(id: 13, name: "Ryze, \n the Rune Mage", imageName: "RyzeIcon", lore: "Ryze, un anciano hechicero azul, viaja por el mundo recolectando runas para protegerlo de su poder devastador."),
-        Character(id: 14, name: "Taliyah, \n the Stoneweaver", imageName: "TalyIcon", lore: "Taliyah, una joven de Shurima con un talento único, teje la tierra con su magia para proteger a los suyos."),
-        Character(id: 15, name: "Viktor, \n the Arcane Herald", imageName: "ViktorIcon", lore: "Viktor, un idealista de Zaun, cree en un futuro glorioso donde la humanidad se perfeccione a través de la tecnología."),
-        Character(id: 16, name: "Vladimir, \n the Crimson Reaper", imageName: "VladIcon", lore: "Vladimir, un maestro de la magia hemomántica, manipula la sangre de sus enemigos para prolongar su vida eterna."),
-        Character(id: 17, name: "Ahri, \n the Nine-Tailed Fox", imageName: "AhriIcon", lore: "Ahri, una vastaya encantadora, utiliza su magia para absorber la esencia vital de sus enemigos."),
-        Character(id: 18, name: "Annie, \n the Dark Child", imageName: "AnnieIcon", lore: "Annie, una niña prodigio con poderes pirocinéticos, controla un oso de fuego llamado Tibbers."),
-        Character(id: 19, name: "Brand, \n the Burning Vengeance", imageName: "BrandIcon", lore: "Brand, un espíritu vengativo, desata su ira en un fuego implacable que consume todo a su paso."),
-        Character(id: 20, name: "LeBlanc, \n the Deceiver", imageName: "LeeBlancIcon", lore: "LeBlanc, una manipuladora maestra de la magia ilusoria, mueve los hilos de Noxus desde las sombras."),
-        Character(id: 21, name: "Lissandra, \n the Ice Witch", imageName: "LissIcon", lore: "Lissandra, una bruja helada, controla un poder oscuro y gélido que amenaza con congelar el mundo."),
-        Character(id: 22, name: "Orianna, \n the Lady of Clockwork", imageName: "OriannaIcon", lore: "Orianna, una autómata de Piltover, lucha junto a su esfera mágica en perfecta sincronía."),
-        Character(id: 23, name: "Syndra, \n the Dark Soverign", imageName: "SyndraIcon", lore: "Syndra, una maestra de la magia, domina orbes oscuros para demostrar su superioridad."),
-        Character(id: 24, name: "Twisted Fate, \n the Card Master", imageName: "TwistedIcon", lore: "Twisted Fate, un hechicero de cartas, apuesta su destino mientras engaña a sus enemigos con sus trucos."),
-        Character(id: 25, name: "Veigar, \n the Tiny Master of Evil", imageName: "VeigarIcon", lore: "Veigar, un yordle obsesionado con la magia oscura, aspira a ser el villano más poderoso de Runaterra."),
-        Character(id: 26, name: "Vex, \n the Gloomist", imageName: "VexIcon", lore: "Vex, una joven yordle sombría, canaliza su apatía y melancolía para enfrentar a aquellos que la irritan."),
-        Character(id: 27, name: "Zoe, \n the Aspect of Twilight", imageName: "ZoeIcon", lore: "Zoe, una traviesa mensajera cósmica, altera el curso de la realidad con su curiosidad despreocupada."),
-        Character(id: 28, name: "Neeko, \n the Curious Chameleon", imageName: "NeekoIcon", lore: "Neeko, una vastaya camaleónica, se mezcla con otros para observar y comprender el mundo con inocente curiosidad."),
-        Character(id: 29, name: "Fiddlesticks, \n the Ancient Fear", imageName: "FiddleIcon", lore: "Fiddlesticks, una pesadilla hecha realidad, caza en las sombras y se alimenta de los temores más profundos de los mortales."),
-        Character(id: 30, name: "Zyra, \n Rise of the Thorns", imageName: "ZyraIcon", lore: "Zyra, una planta viviente, utiliza su control de la naturaleza para dominar el campo de batalla."),
-        Character(id: 31, name: "Heimerdinger, \n the Revered Inventor", imageName: "HeimerdingerIcon", lore: "Heimerdinger, un inventor prodigioso de Piltover, lucha utilizando su genio científico y sus invenciones.")
-    ]
-    
+    @State private var mageRoster: [Mage] = []
+
     var body: some View {
         NavigationStack {
-            List(characters) { character in
-                NavigationLink(destination: CharacterDetailView(character: character)) {
-                    HStack {
-                        Image(character.imageName)
-                            .resizable()
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                        Spacer()
-                            .frame(width: 15)
-                        Text(character.name)
-                            .font(.headline)
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Lista de los campeones de magos
+                    ForEach(mageRoster) { mage in
+                        // Navegar a la vista de detalles al pulsar sobre un mago
+                        NavigationLink(destination: MageDetailView(mage: mage)) {
+                            HStack {
+                                // Imagen cuadrada del mago
+                                Image(uiImage: fetchMagePortrait(mageID: mage.id))
+                                    .resizable()
+                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
+                                
+                                VStack(alignment: .leading) {
+                                    // Texto de nombre con color negro
+                                    Text(mage.name)
+                                        .font(.headline)
+                                        .foregroundColor(.black) // Texto en color negro
+                                    
+                                    // Texto de designación con color negro
+                                    Text(mage.designation)
+                                        .font(.subheadline)
+                                        .foregroundColor(.black) // Texto en color negro
+                                }
+                                
+                                Spacer()
+                                
+                                // Flecha que apunta a la derecha
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray) // Color de la flecha
+                                    .imageScale(.medium)
+                            }
+                            .padding()
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
+                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                            )
+                            .padding([.leading, .trailing])
+                        }
                     }
-                    .padding(.vertical, 8)
                 }
             }
             .navigationTitle("Mages")
             .navigationBarTitleDisplayMode(.large)
+            .onAppear(perform: fetchMages)
         }
+    }
+    
+    // Función para obtener los datos de los campeones (API)
+    private func fetchMages() {
+        guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
+            return
+        }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error fetching mages: \(error)")
+                return
+            }
+
+            guard let data = data else {
+                print("No mage data received")
+                return
+            }
+
+            do {
+                let decodedData = try JSONDecoder().decode(MageData.self, from: data)
+                var mages = [Mage]()
+                
+                // Filtramos campeones con rol "Mage"
+                for (_, mage) in decodedData.data {
+                    if mage.roles.contains("Mage") {
+                        mages.append(mage)
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.mageRoster = mages
+                }
+            } catch {
+                print("Error decoding mage data: \(error)")
+            }
+        }.resume()
+    }
+    
+    // Función para obtener la imagen del mago (foto) desde la API
+    private func fetchMagePortrait(mageID: String) -> UIImage {
+        let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
+        let portraitURL = URL(string: "\(baseURL)\(mageID).png")!
+        
+        if let data = try? Data(contentsOf: portraitURL), let portrait = UIImage(data: data) {
+            return portrait
+        }
+        
+        return UIImage(systemName: "cross.case.fill") ?? UIImage()
     }
 }
 
-struct Character: Identifiable {
-    let id: Int
-    let name: String
-    let imageName: String
-    let lore: String
-}
-
-struct CharacterDetailView: View {
-    let character: Character
+// Vista de detalles para un mago
+struct MageDetailView: View {
+    let mage: Mage
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(character.imageName)
-                .resizable()
-                .frame(width: 150, height: 150)
-                .foregroundColor(.blue)
-            
-            Text(character.name)
-                .font(.largeTitle)
-                .bold()
-            
-            Text(character.lore)
-                .font(.body)
+        ScrollView {
+            VStack(spacing: 20) {
+                VStack(spacing: 10) {
+                    // Imagen cuadrada del mago
+                    Image(uiImage: fetchMagePortrait(mageID: mage.id))
+                        .resizable()
+                        .frame(width: 150, height: 150) // Imagen cuadrada
+                        .cornerRadius(10) // Un pequeño radio de esquina para suavizar los bordes
+                    
+                    // Nombre con color negro
+                    Text(mage.name)
+                        .font(.title)
+                        .bold()
+                        .padding(.top)
+                        .foregroundColor(.black) // Texto en color negro
+                    
+                    // Título con color negro
+                    Text(mage.designation)
+                        .font(.title3)
+                        .foregroundColor(.black) // Texto en color negro
+                    
+                    // Historia
+                    Text(mage.story)
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(10)
+                    
+                    // Habilidades del mago
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Mage Abilities:")
+                            .font(.headline)
+                            .foregroundColor(.black) // Texto en color negro
+                        
+                        if let abilities = mage.abilities {
+                            Text("Ability Power (AP): \(abilities.abilityPower ?? 0)")
+                                .foregroundColor(.purple) // Color morado para Ability Power (AP)
+                            Text("Attack Damage (AD): \(abilities.attackDamage ?? 0)")
+                                .foregroundColor(.orange) // Color naranja para Attack Damage (AD)
+                            Text("Armor: \(abilities.armor ?? 0)")
+                                .foregroundColor(.green) // Color verde para Armor
+                            Text("Magic Resist (MR): \(abilities.magicResist ?? 0)")
+                                .foregroundColor(.blue) // Color azul para Magic Resist (MR)
+                        } else {
+                            Text("No abilities data available")
+                                .foregroundColor(.black) // Texto en color negro
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                }
                 .padding()
-            
-            Spacer()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                )
+                .padding([.leading, .trailing, .top])
+            }
         }
-        .padding()
-        .navigationTitle(character.name)
+        .navigationTitle(mage.name)
         .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    // Función para obtener la imagen del mago (foto) desde la API
+    private func fetchMagePortrait(mageID: String) -> UIImage {
+        let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
+        let portraitURL = URL(string: "\(baseURL)\(mageID).png")!
+        
+        if let data = try? Data(contentsOf: portraitURL), let portrait = UIImage(data: data) {
+            return portrait
+        }
+        
+        return UIImage(systemName: "cross.case.fill") ?? UIImage()
+    }
+}
+
+// Estructuras de datos para la decodificación JSON
+struct MageData: Codable {
+    var data: [String: Mage]
+}
+
+struct Mage: Codable, Identifiable {
+    var id: String
+    var name: String
+    var designation: String
+    var story: String
+    var roles: [String]
+    var abilities: MageAbilities?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case designation = "title"
+        case story = "blurb"
+        case roles = "tags"
+        case abilities = "stats"
+    }
+}
+
+struct MageAbilities: Codable {
+    var abilityPower: Double?
+    var attackDamage: Double?
+    var armor: Double?
+    var magicResist: Double?
+    
+    enum CodingKeys: String, CodingKey {
+        case abilityPower = "magic"
+        case attackDamage = "attackdamage"
+        case armor = "armor"
+        case magicResist = "spellblock"
     }
 }
 

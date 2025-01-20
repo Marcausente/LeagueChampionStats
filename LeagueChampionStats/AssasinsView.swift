@@ -1,18 +1,18 @@
 import SwiftUI
 
-struct AssassinView: View {
+struct AssassinsView: View {
     @State private var assassinRoster: [Assassin] = []
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Lista de los campeones de asesino
+                    // Lista de los campeones de asesinos
                     ForEach(assassinRoster) { assassin in
-                        // Navegar a la vista de detalles al pulsar sobre un campeón
-                        NavigationLink(destination: AssassinDetailView(assassinCharacter: assassin)) {
+                        // Navegar a la vista de detalles al pulsar sobre un asesino
+                        NavigationLink(destination: AssassinDetailView(assassin: assassin)) {
                             HStack {
-                                // Imagen cuadrada
+                                // Imagen cuadrada del asesino
                                 Image(uiImage: fetchAssassinPortrait(assassinID: assassin.id))
                                     .resizable()
                                     .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
@@ -89,7 +89,7 @@ struct AssassinView: View {
         }.resume()
     }
     
-    // Función para obtener la imagen del campeón (foto) desde la API
+    // Función para obtener la imagen del asesino (foto) desde la API
     private func fetchAssassinPortrait(assassinID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(assassinID).png")!
@@ -102,33 +102,34 @@ struct AssassinView: View {
     }
 }
 
+// Vista de detalles para un asesino
 struct AssassinDetailView: View {
-    let assassinCharacter: Assassin
+    let assassin: Assassin
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 VStack(spacing: 10) {
-                    // Imagen cuadrada (en vez de circular)
-                    Image(uiImage: fetchAssassinPortrait(assassinID: assassinCharacter.id))
+                    // Imagen cuadrada del asesino
+                    Image(uiImage: fetchAssassinPortrait(assassinID: assassin.id))
                         .resizable()
                         .frame(width: 150, height: 150) // Imagen cuadrada
-                        .cornerRadius(10) // Un pequeño radio de esquina para suavizar los bordes si lo deseas
+                        .cornerRadius(10) // Un pequeño radio de esquina para suavizar los bordes
                     
                     // Nombre con color negro
-                    Text(assassinCharacter.name)
+                    Text(assassin.name)
                         .font(.title)
                         .bold()
                         .padding(.top)
                         .foregroundColor(.black) // Texto en color negro
                     
                     // Título con color negro
-                    Text(assassinCharacter.designation)
+                    Text(assassin.designation)
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
                     // Historia
-                    Text(assassinCharacter.story)
+                    Text(assassin.story)
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .padding()
@@ -136,13 +137,13 @@ struct AssassinDetailView: View {
                         .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(10)
                     
-                    // Habilidades del campeón
+                    // Habilidades del asesino
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Assassin Abilities:")
                             .font(.headline)
                             .foregroundColor(.black) // Texto en color negro
                         
-                        if let abilities = assassinCharacter.abilities {
+                        if let abilities = assassin.abilities {
                             Text("Ability Power (AP): \(abilities.abilityPower ?? 0)")
                                 .foregroundColor(.purple) // Color morado para Ability Power (AP)
                             Text("Attack Damage (AD): \(abilities.attackDamage ?? 0)")
@@ -167,11 +168,11 @@ struct AssassinDetailView: View {
                 .padding([.leading, .trailing, .top])
             }
         }
-        .navigationTitle(assassinCharacter.name)
+        .navigationTitle(assassin.name)
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // Función para obtener la imagen del campeón (foto) desde la API
+    // Función para obtener la imagen del asesino (foto) desde la API
     private func fetchAssassinPortrait(assassinID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(assassinID).png")!
@@ -219,4 +220,8 @@ struct AssassinAbilities: Codable {
         case armor = "armor"
         case magicResist = "spellblock"
     }
+}
+
+#Preview {
+    AssassinsView()
 }

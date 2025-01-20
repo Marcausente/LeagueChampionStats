@@ -1,10 +1,3 @@
-//
-//  CampionsView.swift
-//  LeagueChampionStats
-//
-//  Created by Marc Fernández on 2/1/25.
-//
-
 import SwiftUI
 
 
