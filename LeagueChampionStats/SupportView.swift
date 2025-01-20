@@ -104,6 +104,7 @@ struct SupportView: View {
 
 struct SupportDetailView: View {
     let supportCharacter: Healer
+    @State private var isLoreExpanded = false // Estado para controlar la expansión del lore
     
     var body: some View {
         ScrollView {
@@ -127,14 +128,20 @@ struct SupportDetailView: View {
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
-                    // Historia
-                    Text(supportCharacter.story)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(10)
+                    // Pestaña para plegar y desplegar el Lore
+                    DisclosureGroup(isExpanded: $isLoreExpanded) {
+                        Text(supportCharacter.story)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    } label: {
+                        Text("Lore")
+                            .font(.headline)
+                            .foregroundColor(.blue) // Texto en color azul
+                    }
                     
                     // Habilidades del campeón
                     VStack(alignment: .leading, spacing: 8) {

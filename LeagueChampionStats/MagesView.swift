@@ -105,7 +105,8 @@ struct MagesView: View {
 // Vista de detalles para un mago
 struct MageDetailView: View {
     let mage: Mage
-    
+    @State private var isLoreExpanded: Bool = false // Estado para controlar si el lore está expandido o colapsado
+
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -128,14 +129,22 @@ struct MageDetailView: View {
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
-                    // Historia
-                    Text(mage.story)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(10)
+                    // Pestaña plegable para el lore
+                    DisclosureGroup(isExpanded: $isLoreExpanded) {
+                        // Historia
+                        Text(mage.story)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    } label: {
+                        Text("Lore")
+                            .font(.headline)
+                            .foregroundColor(.black) // Título "Lore" en color negro
+                    }
+                    .padding(.top, 10)
                     
                     // Habilidades del mago
                     VStack(alignment: .leading, spacing: 8) {

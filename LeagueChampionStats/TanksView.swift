@@ -105,6 +105,7 @@ struct TanksView: View {
 // Vista de detalles para un tanque
 struct TankDetailView: View {
     let tank: Tank
+    @State private var isLoreExpanded = false // Estado para controlar la expansión del lore
     
     var body: some View {
         ScrollView {
@@ -128,14 +129,20 @@ struct TankDetailView: View {
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
-                    // Historia
-                    Text(tank.story)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(10)
+                    // Pestaña para plegar y desplegar el Lore
+                    DisclosureGroup(isExpanded: $isLoreExpanded) {
+                        Text(tank.story)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    } label: {
+                        Text("Lore")
+                            .font(.headline)
+                            .foregroundColor(.blue) // Texto en color azul
+                    }
                     
                     // Habilidades del tanque
                     VStack(alignment: .leading, spacing: 8) {

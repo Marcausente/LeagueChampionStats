@@ -105,6 +105,7 @@ struct FightersView: View {
 // Vista de detalles para un luchador
 struct FighterDetailView: View {
     let fighter: Fighter
+    @State private var isLoreExpanded: Bool = false // Estado para controlar si el lore está expandido o no
     
     var body: some View {
         ScrollView {
@@ -128,14 +129,25 @@ struct FighterDetailView: View {
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
-                    // Historia
-                    Text(fighter.story)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(10)
+                    // DisclosureGroup para el lore
+                    DisclosureGroup(
+                        isExpanded: $isLoreExpanded,
+                        content: {
+                            Text(fighter.story)
+                                .font(.body)
+                                .multilineTextAlignment(.center)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color(UIColor.secondarySystemBackground))
+                                .cornerRadius(10)
+                        },
+                        label: {
+                            Text("Lore")
+                                .font(.headline)
+                                .foregroundColor(.black) // Texto en color negro
+                        }
+                    )
+                    .padding(.top)
                     
                     // Habilidades del luchador
                     VStack(alignment: .leading, spacing: 8) {

@@ -105,6 +105,7 @@ struct AssassinsView: View {
 // Vista de detalles para un asesino
 struct AssassinDetailView: View {
     let assassin: Assassin
+    @State private var isLoreExpanded = false // Estado para controlar la expansión del lore
     
     var body: some View {
         ScrollView {
@@ -128,14 +129,23 @@ struct AssassinDetailView: View {
                         .font(.title3)
                         .foregroundColor(.black) // Texto en color negro
                     
-                    // Historia
-                    Text(assassin.story)
-                        .font(.body)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color(UIColor.secondarySystemBackground))
-                        .cornerRadius(10)
+                    // Historia (lore) plegable
+                    DisclosureGroup(isExpanded: $isLoreExpanded) {
+                        Text(assassin.story)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color(UIColor.secondarySystemBackground))
+                            .cornerRadius(10)
+                    } label: {
+                        Text("Lore")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding(.vertical, 5)
+                    }
+                    .padding(.horizontal)
+                    .animation(.easeInOut, value: isLoreExpanded) // Animación para el toggle
                     
                     // Habilidades del asesino
                     VStack(alignment: .leading, spacing: 8) {

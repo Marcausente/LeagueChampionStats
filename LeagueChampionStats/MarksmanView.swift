@@ -60,25 +60,40 @@ struct MarksmanCharacter: Identifiable {
 
 struct MarksmanDetailView: View {
     let character: MarksmanCharacter
+    @State private var isLoreExpanded: Bool = false // Estado para controlar si el lore está expandido o colapsado
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(character.imageName)
-                .resizable()
-                .frame(width: 150, height: 150)
-                .foregroundColor(.blue)
-            
-            Text(character.name)
-                .font(.largeTitle)
-                .bold()
-            
-            Text(character.lore)
-                .font(.body)
-                .padding()
-            
-            Spacer()
+        ScrollView {
+            VStack(spacing: 20) {
+                Image(character.imageName)
+                    .resizable()
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                
+                Text(character.name)
+                    .font(.largeTitle)
+                    .bold()
+                
+                // Pestaña plegable para el lore
+                DisclosureGroup(isExpanded: $isLoreExpanded) {
+                    Text(character.lore)
+                        .font(.body)
+                        .padding()
+                        .multilineTextAlignment(.center)
+                        .background(Color(UIColor.secondarySystemBackground))
+                        .cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                } label: {
+                    Text("Lore")
+                        .font(.headline)
+                        .foregroundColor(.black) // Título "Lore" en color negro
+                }
+                .padding(.top, 10)
+                
+                Spacer()
+            }
+            .padding()
         }
-        .padding()
         .navigationTitle(character.name)
         .navigationBarTitleDisplayMode(.inline)
     }
