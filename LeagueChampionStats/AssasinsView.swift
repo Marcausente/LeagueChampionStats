@@ -2,46 +2,58 @@ import SwiftUI
 
 struct AssassinsView: View {
     @State private var assassinRoster: [Assassin] = []
+    @State private var isLoading: Bool = true // Estado de carga
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Lista de los campeones de asesinos
-                    ForEach(assassinRoster) { assassin in
-                        // Navegar a la vista de detalles al pulsar sobre un asesino
-                        NavigationLink(destination: AssassinDetailView(assassin: assassin)) {
-                            HStack {
-                                // Imagen cuadrada del asesino
-                                Image(uiImage: fetchAssassinPortrait(assassinID: assassin.id))
-                                    .resizable()
-                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
-                                
-                                VStack(alignment: .leading) {
-                                    // Texto de nombre con color negro
-                                    Text(assassin.name)
-                                        .font(.headline)
-                                        .foregroundColor(.black) // Texto en color negro
-                                    
-                                    // Texto de designación con color negro
-                                    Text(assassin.designation)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black) // Texto en color negro
+            ZStack {
+                if isLoading {
+                    // Pantalla de carga centrada
+                    VStack {
+                        ProgressView("Loading Assassins...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(UIColor.systemBackground)) // Fondo consistente
+                } else {
+                    // Contenido principal
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            // Lista de los campeones asesinos
+                            ForEach(assassinRoster) { assassin in
+                                NavigationLink(destination: AssassinDetailView(assassin: assassin)) {
+                                    HStack {
+                                        // Imagen cuadrada del asesino
+                                        Image(uiImage: fetchAssassinPortrait(assassinID: assassin.id))
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+
+                                        VStack(alignment: .leading) {
+                                            Text(assassin.name)
+                                                .font(.headline)
+                                                .foregroundColor(.black)
+
+                                            Text(assassin.designation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                        }
+
+                                        Spacer()
+
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                            .imageScale(.medium)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 0)
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                    )
+                                    .padding([.leading, .trailing])
                                 }
-                                
-                                Spacer()
-                                
-                                // Flecha que apunta a la derecha
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray) // Color de la flecha
-                                    .imageScale(.medium)
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
-                            )
-                            .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -51,7 +63,7 @@ struct AssassinsView: View {
             .onAppear(perform: fetchAssassins)
         }
     }
-    
+
     // Función para obtener los datos de los campeones (API)
     private func fetchAssassins() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
@@ -61,43 +73,53 @@ struct AssassinsView: View {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching assassins: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
             guard let data = data else {
                 print("No assassin data received")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
             do {
                 let decodedData = try JSONDecoder().decode(AssassinData.self, from: data)
                 var assassins = [Assassin]()
-                
-                // Filtramos campeones con rol "Assassin"
+
+                // Filtrar campeones con rol "Assassin"
                 for (_, assassin) in decodedData.data {
                     if assassin.roles.contains("Assassin") {
                         assassins.append(assassin)
                     }
                 }
-                
+
                 DispatchQueue.main.async {
                     self.assassinRoster = assassins
+                    self.isLoading = false // Carga completada
                 }
             } catch {
                 print("Error decoding assassin data: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
             }
         }.resume()
     }
-    
-    // Función para obtener la imagen del asesino (foto) desde la API
+
+    // Función para obtener la imagen del asesino desde la API
     private func fetchAssassinPortrait(assassinID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(assassinID).png")!
-        
+
         if let data = try? Data(contentsOf: portraitURL), let portrait = UIImage(data: data) {
             return portrait
         }
-        
+
         return UIImage(systemName: "cross.case.fill") ?? UIImage()
     }
 }

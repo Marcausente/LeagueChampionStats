@@ -13,8 +13,8 @@ struct SupportView: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
                             .scaleEffect(1.5) // Ajustar tamaño del indicador
-                        Text("Loading...")
-                            .foregroundColor(.gray)
+                        Text("Loading Support...")
+                            .foregroundColor(.blue)
                             .padding(.top, 8)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
