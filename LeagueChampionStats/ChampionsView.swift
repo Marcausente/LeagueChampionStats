@@ -16,7 +16,6 @@ struct ChampionsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Fondo gris suave
                 Color.gray.opacity(0.2)
                     .ignoresSafeArea()
                 
@@ -32,10 +31,10 @@ struct ChampionsView: View {
                                 ZStack {
                                     Color.white
                                         .cornerRadius(16)
-                                        .frame(height: 160) // Hacer las tarjetas más grandes
+                                        .frame(height: 160)
                                     
                                     VStack {
-                                        // Uso de iconos más representativos para cada categoría
+                                    
                                         switch category {
                                         case .Mages:
                                             Image(systemName: "book.closed.fill")
@@ -70,7 +69,7 @@ struct ChampionsView: View {
                                     }
                                     .padding(16)
                                 }
-                                .scaleEffect(0.98) // Escala sutil para el efecto de interacción
+                                .scaleEffect(0.98) 
                                 .animation(.spring(), value: category)
                             }
                         }

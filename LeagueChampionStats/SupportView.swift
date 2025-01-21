@@ -2,31 +2,27 @@ import SwiftUI
 
 struct SupportView: View {
     @State private var supportRoster: [Healer] = []
-    @State private var isLoading: Bool = true // Estado para la carga
+    @State private var isLoading: Bool = true 
 
     var body: some View {
         NavigationStack {
             Group {
                 if isLoading {
-                    // Vista de carga centrada
                     VStack {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
-                            .scaleEffect(1.5) // Ajustar tamaño del indicador
+                            .scaleEffect(1.5)
                         Text("Loading Support...")
                             .foregroundColor(.blue)
                             .padding(.top, 8)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    // Contenido principal
                     ScrollView {
                         VStack(spacing: 20) {
-                            // Lista de los campeones de soporte
                             ForEach(supportRoster) { healer in
                                 NavigationLink(destination: SupportDetailView(supportCharacter: healer)) {
                                     HStack {
-                                        // Imagen cuadrada
                                         Image(uiImage: fetchHealerPortrait(healerID: healer.id))
                                             .resizable()
                                             .frame(width: 50, height: 50)
@@ -65,7 +61,6 @@ struct SupportView: View {
         }
     }
 
-    // Función para obtener los datos de los campeones (API)
     private func fetchSupporters() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
             return
@@ -94,7 +89,7 @@ struct SupportView: View {
                 
                 DispatchQueue.main.async {
                     self.supportRoster = supporters
-                    self.isLoading = false // Detener la carga
+                    self.isLoading = false
                 }
             } catch {
                 print("Error decoding support data: \(error)")
@@ -102,7 +97,6 @@ struct SupportView: View {
         }.resume()
     }
 
-    // Función para obtener la imagen del campeón
     private func fetchHealerPortrait(healerID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(healerID).png")!
@@ -117,31 +111,27 @@ struct SupportView: View {
 
 struct SupportDetailView: View {
     let supportCharacter: Healer
-    @State private var isLoreExpanded = false // Estado para controlar la expansión del lore
+    @State private var isLoreExpanded = false
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 VStack(spacing: 10) {
-                    // Imagen cuadrada (en vez de circular)
                     Image(uiImage: fetchHealerPortrait(healerID: supportCharacter.id))
                         .resizable()
-                        .frame(width: 150, height: 150) // Imagen cuadrada
-                        .cornerRadius(10) // Un pequeño radio de esquina para suavizar los bordes si lo deseas
+                        .frame(width: 150, height: 150)
+                        .cornerRadius(10)
                     
-                    // Nombre con color negro
                     Text(supportCharacter.name)
                         .font(.title)
                         .bold()
                         .padding(.top)
-                        .foregroundColor(.black) // Texto en color negro
+                        .foregroundColor(.black)
                     
-                    // Título con color negro
                     Text(supportCharacter.designation)
                         .font(.title3)
-                        .foregroundColor(.black) // Texto en color negro
+                        .foregroundColor(.black)
                     
-                    // Pestaña para plegar y desplegar el Lore
                     DisclosureGroup(isExpanded: $isLoreExpanded) {
                         Text(supportCharacter.story)
                             .font(.body)
@@ -153,27 +143,26 @@ struct SupportDetailView: View {
                     } label: {
                         Text("Lore")
                             .font(.headline)
-                            .foregroundColor(.blue) // Texto en color azul
+                            .foregroundColor(.blue)
                     }
                     
-                    // Habilidades del campeón
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Support Abilities:")
                             .font(.headline)
-                            .foregroundColor(.black) // Texto en color negro
+                            .foregroundColor(.black)
                         
                         if let abilities = supportCharacter.abilities {
                             Text("Ability Power (AP): \(abilities.abilityPower ?? 0)")
-                                .foregroundColor(.purple) // Color morado para Ability Power (AP)
+                                .foregroundColor(.purple)
                             Text("Attack Damage (AD): \(abilities.attackDamage ?? 0)")
-                                .foregroundColor(.orange) // Color naranja para Attack Damage (AD)
+                                .foregroundColor(.orange)
                             Text("Armor: \(abilities.armor ?? 0)")
-                                .foregroundColor(.green) // Color verde para Armor
+                                .foregroundColor(.green)
                             Text("Magic Resist (MR): \(abilities.magicResist ?? 0)")
-                                .foregroundColor(.blue) // Color azul para Magic Resist (MR)
+                                .foregroundColor(.blue)
                         } else {
                             Text("No abilities data available")
-                                .foregroundColor(.black) // Texto en color negro
+                                .foregroundColor(.black)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -181,8 +170,8 @@ struct SupportDetailView: View {
                 }
                 .padding()
                 .overlay(
-                    RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                    RoundedRectangle(cornerRadius: 0)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                 )
                 .padding([.leading, .trailing, .top])
             }
@@ -191,7 +180,6 @@ struct SupportDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // Función para obtener la imagen del campeón (foto) desde la API
     private func fetchHealerPortrait(healerID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(healerID).png")!
@@ -204,7 +192,6 @@ struct SupportDetailView: View {
     }
 }
 
-// Estructuras de datos para la decodificación JSON
 struct SupportData: Codable {
     var data: [String: Healer]
 }

@@ -1,6 +1,5 @@
 import SwiftUI
 
-// Modelo de un ítem
 struct Item: Identifiable {
     let id = UUID()
     let name: String
@@ -13,7 +12,6 @@ struct Item: Identifiable {
     let background: String
 }
 
-// Clase para manejar ítems en diferentes categorías
 class ItemStore: ObservableObject {
     @Published var starterItems: [Item] = []
     @Published var basicItems: [Item] = []
@@ -23,7 +21,6 @@ class ItemStore: ObservableObject {
     @Published var bootsItems: [Item] = []
     
     init() {
-        // Agregar los ítems predefinidos de Starter al iniciar
         starterItems = [
             Item(name: "Lanza Negra", category: .Starter, attackDamage: 10, abilityPower: 0, armor: 5, magicResist: 0, price: 450, background: "A simple weapon designed for early game combat."),
             Item(name: "Guadaña", category: .Starter, attackDamage: 15, abilityPower: 0, armor: 10, magicResist: 0, price: 800, background: "A weapon made for early combat with a balance of attack and defense."),
@@ -261,22 +258,22 @@ struct ItemDetailView: View {
                     .padding(.top, 8)
             }
             .padding()
-            .frame(maxWidth: .infinity) // Asegura que el contenido se ajuste al ancho disponible
-            .background(Color.white) // Fondo blanco para el contenido
-            .cornerRadius(16) // Bordes redondeados
-            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2) // Sombra para el efecto visual
+            .frame(maxWidth: .infinity)
+            .background(Color.white)
+            .cornerRadius(16)
+            .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
         }
         .navigationTitle("Detalles del Ítem")
-        .navigationBarTitleDisplayMode(.inline) // Estilo compacto
-        .background(Color.gray.opacity(0.2).ignoresSafeArea()) // Fondo gris suave fuera del contenido, solo fuera del ScrollView
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.gray.opacity(0.2).ignoresSafeArea())
     }
 }
 
 
 
 struct ItemsView: View {
-    @StateObject private var itemStore = ItemStore() // Estado compartido
-    @State private var showAddItemView = false  // Para controlar la presentación del formulario
+    @StateObject private var itemStore = ItemStore()
+    @State private var showAddItemView = false
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -293,7 +290,6 @@ struct ItemsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                // Fondo gris suave
                 Color.gray.opacity(0.2)
                     .ignoresSafeArea()
                 
@@ -309,10 +305,9 @@ struct ItemsView: View {
                                 ZStack {
                                     Color.white
                                         .cornerRadius(16)
-                                        .frame(height: 160) // Hacer las tarjetas más grandes
+                                        .frame(height: 160)
                                     
                                     VStack {
-                                        // Iconos representativos para cada categoría de ítem
                                         switch category {
                                         case .Starter:
                                             Image(systemName: "star.fill")
@@ -347,7 +342,7 @@ struct ItemsView: View {
                                     }
                                     .padding(16)
                                 }
-                                .scaleEffect(0.98) // Escala sutil para el efecto de interacción
+                                .scaleEffect(0.98)
                                 .animation(.spring(), value: category)
                             }
                         }
@@ -409,7 +404,7 @@ enum ItemCategory: String, CaseIterable {
 
 struct AddNewItems: View {
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var itemStore: ItemStore // Observado para actualizar el estado compartido
+    @ObservedObject var itemStore: ItemStore
     
     @State private var itemName: String = ""
     @State private var selectedCategory: ItemCategory = .Starter
@@ -460,7 +455,7 @@ struct AddNewItems: View {
                             .padding()
                             .background(Color(UIColor.secondarySystemBackground))
                             .cornerRadius(10)
-                            .frame(height: 100) // Ajusta el alto del TextEditor
+                            .frame(height: 100)
                     }
                     
                     VStack(alignment: .leading, spacing: 8) {
@@ -481,7 +476,7 @@ struct AddNewItems: View {
                     Button(action: {
                         presentationMode.wrappedValue.dismiss() // Cierra la vista
                     }) {
-                        Image(systemName: "arrow.left") // Flecha de retroceso
+                        Image(systemName: "arrow.left") // Flechita para volver atrás
                             .font(.title)
                             .foregroundColor(.blue)
                     }
@@ -505,21 +500,20 @@ struct AddNewItems: View {
     }
     
     private func addItem() {
-        // Validación de los campos
+        // Valida que se hayan rellenado los campos obligatorios
         guard !itemName.isEmpty, !priceString.isEmpty, !background.isEmpty else {
             alertMessage = "Es obligatorio rellenar el nombre, precio y Background"
             showAlert = true
             return
         }
         
-        // Validar que el precio sea un número válido
+        // Validar que el precio sea un numero y nada mas
         guard let price = Double(priceString) else {
             alertMessage = "El precio tiene que ser un numero valido"
             showAlert = true
             return
         }
         
-        // Crear el nuevo item
         let newItem = Item(
             name: itemName,
             category: selectedCategory,

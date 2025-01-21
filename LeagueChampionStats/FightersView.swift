@@ -2,13 +2,12 @@ import SwiftUI
 
 struct FightersView: View {
     @State private var fighterRoster: [Fighter] = []
-    @State private var isLoading: Bool = true // Estado de carga
+    @State private var isLoading: Bool = true
 
     var body: some View {
         NavigationStack {
             ZStack {
                 if isLoading {
-                    // Pantalla de carga centrada
                     VStack {
                         ProgressView("Loading Fighters...")
                             .progressViewStyle(CircularProgressViewStyle())
@@ -16,43 +15,38 @@ struct FightersView: View {
                             .font(.headline)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color(UIColor.systemBackground)) // Fondo del mismo color que la vista principal
+                    .background(Color(UIColor.systemBackground))
                 } else {
-                    // Contenido principal
                     ScrollView {
                         VStack(spacing: 20) {
-                            // Lista de los campeones de luchadores
                             ForEach(fighterRoster) { fighter in
                                 NavigationLink(destination: FighterDetailView(fighter: fighter)) {
                                     HStack {
-                                        // Imagen cuadrada del luchador
                                         Image(uiImage: fetchFighterPortrait(fighterID: fighter.id))
                                             .resizable()
-                                            .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
+                                            .frame(width: 50, height: 50)
                                         
                                         VStack(alignment: .leading) {
-                                            // Texto de nombre con color negro
                                             Text(fighter.name)
                                                 .font(.headline)
-                                                .foregroundColor(.black) // Texto en color negro
+                                                .foregroundColor(.black)
                                             
-                                            // Texto de designación con color negro
                                             Text(fighter.designation)
                                                 .font(.subheadline)
-                                                .foregroundColor(.black) // Texto en color negro
+                                                .foregroundColor(.black)
                                         }
                                         
                                         Spacer()
                                         
-                                        // Flecha que apunta a la derecha
+                            
                                         Image(systemName: "chevron.right")
-                                            .foregroundColor(.gray) // Color de la flecha
+                                            .foregroundColor(.gray)
                                             .imageScale(.medium)
                                     }
                                     .padding()
                                     .overlay(
-                                        RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                                        RoundedRectangle(cornerRadius: 0)
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                                     )
                                     .padding([.leading, .trailing])
                                 }
@@ -67,7 +61,6 @@ struct FightersView: View {
         }
     }
     
-    // Función para obtener los datos de los campeones (API)
     private func fetchFighters() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
             return
@@ -77,7 +70,7 @@ struct FightersView: View {
             if let error = error {
                 print("Error fetching fighters: \(error)")
                 DispatchQueue.main.async {
-                    isLoading = false // Se detiene la carga
+                    isLoading = false
                 }
                 return
             }
@@ -85,7 +78,7 @@ struct FightersView: View {
             guard let data = data else {
                 print("No fighter data received")
                 DispatchQueue.main.async {
-                    isLoading = false // Se detiene la carga
+                    isLoading = false
                 }
                 return
             }
@@ -94,7 +87,6 @@ struct FightersView: View {
                 let decodedData = try JSONDecoder().decode(FighterData.self, from: data)
                 var fighters = [Fighter]()
                 
-                // Filtramos campeones con rol "Fighter"
                 for (_, fighter) in decodedData.data {
                     if fighter.roles.contains("Fighter") {
                         fighters.append(fighter)
@@ -103,18 +95,18 @@ struct FightersView: View {
                 
                 DispatchQueue.main.async {
                     self.fighterRoster = fighters
-                    self.isLoading = false // Carga completada
+                    self.isLoading = false
                 }
             } catch {
                 print("Error decoding fighter data: \(error)")
                 DispatchQueue.main.async {
-                    isLoading = false // Se detiene la carga
+                    isLoading = false
                 }
             }
         }.resume()
     }
     
-    // Función para obtener la imagen del luchador (foto) desde la API
+
     private func fetchFighterPortrait(fighterID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(fighterID).png")!
@@ -127,34 +119,29 @@ struct FightersView: View {
     }
 }
 
-// Vista de detalles para un luchador
 struct FighterDetailView: View {
     let fighter: Fighter
-    @State private var isLoreExpanded: Bool = false // Estado para controlar si el lore está expandido o no
+    @State private var isLoreExpanded: Bool = false
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 VStack(spacing: 10) {
-                    // Imagen cuadrada del luchador
                     Image(uiImage: fetchFighterPortrait(fighterID: fighter.id))
                         .resizable()
-                        .frame(width: 150, height: 150) // Imagen cuadrada
-                        .cornerRadius(10) // Un pequeño radio de esquina para suavizar los bordes
+                        .frame(width: 150, height: 150)
+                        .cornerRadius(10)
                     
-                    // Nombre con color negro
                     Text(fighter.name)
                         .font(.title)
                         .bold()
                         .padding(.top)
-                        .foregroundColor(.black) // Texto en color negro
+                        .foregroundColor(.black) 
                     
-                    // Título con color negro
                     Text(fighter.designation)
                         .font(.title3)
-                        .foregroundColor(.black) // Texto en color negro
+                        .foregroundColor(.black)
                     
-                    // DisclosureGroup para el lore
                     DisclosureGroup(
                         isExpanded: $isLoreExpanded,
                         content: {
@@ -169,29 +156,33 @@ struct FighterDetailView: View {
                         label: {
                             Text("Lore")
                                 .font(.headline)
-                                .foregroundColor(.black) // Texto en color negro
+                                .foregroundColor(.black)
                         }
                     )
                     .padding(.top)
                     
-                    // Habilidades del luchador
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Fighter Abilities:")
                             .font(.headline)
-                            .foregroundColor(.black) // Texto en color negro
+                            .foregroundColor(.black)
                         
                         if let abilities = fighter.abilities {
                             Text("Ability Power (AP): \(abilities.abilityPower ?? 0)")
-                                .foregroundColor(.purple) // Color morado para Ability Power (AP)
+                                .foregroundColor(.purple)
+                            
                             Text("Attack Damage (AD): \(abilities.attackDamage ?? 0)")
-                                .foregroundColor(.orange) // Color naranja para Attack Damage (AD)
+                                .foregroundColor(.orange)
+                            
                             Text("Armor: \(abilities.armor ?? 0)")
-                                .foregroundColor(.green) // Color verde para Armor
+                                .foregroundColor(.green)
+                            
                             Text("Magic Resist (MR): \(abilities.magicResist ?? 0)")
-                                .foregroundColor(.blue) // Color azul para Magic Resist (MR)
+                                .foregroundColor(.blue)
+                            
                         } else {
                             Text("No abilities data available")
-                                .foregroundColor(.black) // Texto en color negro
+                                .foregroundColor(.black)
+                            
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -199,8 +190,10 @@ struct FighterDetailView: View {
                 }
                 .padding()
                 .overlay(
-                    RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                        .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                    RoundedRectangle(cornerRadius: 0)
+                    
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                
                 )
                 .padding([.leading, .trailing, .top])
             }
@@ -209,7 +202,7 @@ struct FighterDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
-    // Función para obtener la imagen del luchador (foto) desde la API
+
     private func fetchFighterPortrait(fighterID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(fighterID).png")!
@@ -222,7 +215,6 @@ struct FighterDetailView: View {
     }
 }
 
-// Estructuras de datos para la decodificación JSON
 struct FighterData: Codable {
     var data: [String: Fighter]
 }
