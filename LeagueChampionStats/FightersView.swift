@@ -2,46 +2,61 @@ import SwiftUI
 
 struct FightersView: View {
     @State private var fighterRoster: [Fighter] = []
+    @State private var isLoading: Bool = true // Estado de carga
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Lista de los campeones de luchadores
-                    ForEach(fighterRoster) { fighter in
-                        // Navegar a la vista de detalles al pulsar sobre un luchador
-                        NavigationLink(destination: FighterDetailView(fighter: fighter)) {
-                            HStack {
-                                // Imagen cuadrada del luchador
-                                Image(uiImage: fetchFighterPortrait(fighterID: fighter.id))
-                                    .resizable()
-                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
-                                
-                                VStack(alignment: .leading) {
-                                    // Texto de nombre con color negro
-                                    Text(fighter.name)
-                                        .font(.headline)
-                                        .foregroundColor(.black) // Texto en color negro
-                                    
-                                    // Texto de designación con color negro
-                                    Text(fighter.designation)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black) // Texto en color negro
+            ZStack {
+                if isLoading {
+                    // Pantalla de carga centrada
+                    VStack {
+                        ProgressView("Loading Fighters...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(UIColor.systemBackground)) // Fondo del mismo color que la vista principal
+                } else {
+                    // Contenido principal
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            // Lista de los campeones de luchadores
+                            ForEach(fighterRoster) { fighter in
+                                NavigationLink(destination: FighterDetailView(fighter: fighter)) {
+                                    HStack {
+                                        // Imagen cuadrada del luchador
+                                        Image(uiImage: fetchFighterPortrait(fighterID: fighter.id))
+                                            .resizable()
+                                            .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
+                                        
+                                        VStack(alignment: .leading) {
+                                            // Texto de nombre con color negro
+                                            Text(fighter.name)
+                                                .font(.headline)
+                                                .foregroundColor(.black) // Texto en color negro
+                                            
+                                            // Texto de designación con color negro
+                                            Text(fighter.designation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black) // Texto en color negro
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        // Flecha que apunta a la derecha
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray) // Color de la flecha
+                                            .imageScale(.medium)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                                    )
+                                    .padding([.leading, .trailing])
                                 }
-                                
-                                Spacer()
-                                
-                                // Flecha que apunta a la derecha
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray) // Color de la flecha
-                                    .imageScale(.medium)
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
-                            )
-                            .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -61,11 +76,17 @@ struct FightersView: View {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching fighters: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false // Se detiene la carga
+                }
                 return
             }
 
             guard let data = data else {
                 print("No fighter data received")
+                DispatchQueue.main.async {
+                    isLoading = false // Se detiene la carga
+                }
                 return
             }
 
@@ -82,9 +103,13 @@ struct FightersView: View {
                 
                 DispatchQueue.main.async {
                     self.fighterRoster = fighters
+                    self.isLoading = false // Carga completada
                 }
             } catch {
                 print("Error decoding fighter data: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false // Se detiene la carga
+                }
             }
         }.resume()
     }
