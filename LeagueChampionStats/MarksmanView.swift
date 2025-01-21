@@ -2,46 +2,58 @@ import SwiftUI
 
 struct MarksmanView: View {
     @State private var marksmanRoster: [Marksman] = []
-    
+    @State private var isLoading: Bool = true // Estado de carga
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Lista de los campeones de marksman
-                    ForEach(marksmanRoster) { marksman in
-                        // Navegar a la vista de detalles al pulsar sobre un campeón
-                        NavigationLink(destination: MarksmanDetailView(marksmanCharacter: marksman)) {
-                            HStack {
-                                // Imagen cuadrada
-                                Image(uiImage: fetchMarksmanPortrait(marksmanID: marksman.id))
-                                    .resizable()
-                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
-                                
-                                VStack(alignment: .leading) {
-                                    // Texto de nombre con color negro
-                                    Text(marksman.name)
-                                        .font(.headline)
-                                        .foregroundColor(.black) // Texto en color negro
-                                    
-                                    // Texto de designación con color negro
-                                    Text(marksman.designation)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black) // Texto en color negro
+            ZStack {
+                if isLoading {
+                    // Pantalla de carga centrada
+                    VStack {
+                        ProgressView("Loading Marksmen...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(UIColor.systemBackground)) // Fondo del mismo color que la vista principal
+                } else {
+                    // Contenido principal
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            // Lista de los campeones de marksman
+                            ForEach(marksmanRoster) { marksman in
+                                NavigationLink(destination: MarksmanDetailView(marksmanCharacter: marksman)) {
+                                    HStack {
+                                        // Imagen cuadrada
+                                        Image(uiImage: fetchMarksmanPortrait(marksmanID: marksman.id))
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+
+                                        VStack(alignment: .leading) {
+                                            Text(marksman.name)
+                                                .font(.headline)
+                                                .foregroundColor(.black)
+
+                                            Text(marksman.designation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                        }
+
+                                        Spacer()
+
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                            .imageScale(.medium)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 0)
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                    )
+                                    .padding([.leading, .trailing])
                                 }
-                                
-                                Spacer()
-                                
-                                // Flecha que apunta a la derecha
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray) // Color de la flecha
-                                    .imageScale(.medium)
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
-                            )
-                            .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -51,8 +63,7 @@ struct MarksmanView: View {
             .onAppear(perform: fetchMarksmen)
         }
     }
-    
-    // Función para obtener los datos de los campeones (API)
+
     private func fetchMarksmen() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
             return
@@ -61,43 +72,52 @@ struct MarksmanView: View {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching marksmen: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
             guard let data = data else {
                 print("No marksman data received")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
             do {
                 let decodedData = try JSONDecoder().decode(MarksmanData.self, from: data)
                 var marksmen = [Marksman]()
-                
-                // Filtramos campeones con rol "Marksman"
+
+                // Filtrar campeones con rol "Marksman"
                 for (_, marksman) in decodedData.data {
                     if marksman.roles.contains("Marksman") {
                         marksmen.append(marksman)
                     }
                 }
-                
+
                 DispatchQueue.main.async {
                     self.marksmanRoster = marksmen
+                    self.isLoading = false // Carga completada
                 }
             } catch {
                 print("Error decoding marksman data: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
             }
         }.resume()
     }
-    
-    // Función para obtener la imagen del campeón (foto) desde la API
+
     private func fetchMarksmanPortrait(marksmanID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(marksmanID).png")!
-        
+
         if let data = try? Data(contentsOf: portraitURL), let portrait = UIImage(data: data) {
             return portrait
         }
-        
+
         return UIImage(systemName: "cross.case.fill") ?? UIImage()
     }
 }
