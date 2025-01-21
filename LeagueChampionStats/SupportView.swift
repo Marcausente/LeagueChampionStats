@@ -2,46 +2,59 @@ import SwiftUI
 
 struct SupportView: View {
     @State private var supportRoster: [Healer] = []
-    
+    @State private var isLoading: Bool = true // Estado para la carga
+
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Lista de los campeones de soporte
-                    ForEach(supportRoster) { healer in
-                        // Navegar a la vista de detalles al pulsar sobre un campeón
-                        NavigationLink(destination: SupportDetailView(supportCharacter: healer)) {
-                            HStack {
-                                // Imagen cuadrada
-                                Image(uiImage: fetchHealerPortrait(healerID: healer.id))
-                                    .resizable()
-                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
-                                
-                                VStack(alignment: .leading) {
-                                    // Texto de nombre con color negro
-                                    Text(healer.name)
-                                        .font(.headline)
-                                        .foregroundColor(.black) // Texto en color negro
-                                    
-                                    // Texto de designación con color negro
-                                    Text(healer.designation)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black) // Texto en color negro
+            Group {
+                if isLoading {
+                    // Vista de carga centrada
+                    VStack {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .scaleEffect(1.5) // Ajustar tamaño del indicador
+                        Text("Loading...")
+                            .foregroundColor(.gray)
+                            .padding(.top, 8)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    // Contenido principal
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            // Lista de los campeones de soporte
+                            ForEach(supportRoster) { healer in
+                                NavigationLink(destination: SupportDetailView(supportCharacter: healer)) {
+                                    HStack {
+                                        // Imagen cuadrada
+                                        Image(uiImage: fetchHealerPortrait(healerID: healer.id))
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text(healer.name)
+                                                .font(.headline)
+                                                .foregroundColor(.black)
+                                            
+                                            Text(healer.designation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray)
+                                            .imageScale(.medium)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 0)
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                    )
+                                    .padding([.leading, .trailing])
                                 }
-                                
-                                Spacer()
-                                
-                                // Flecha que apunta a la derecha
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray) // Color de la flecha
-                                    .imageScale(.medium)
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
-                            )
-                            .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -51,7 +64,7 @@ struct SupportView: View {
             .onAppear(perform: fetchSupporters)
         }
     }
-    
+
     // Función para obtener los datos de los campeones (API)
     private func fetchSupporters() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
@@ -73,7 +86,6 @@ struct SupportView: View {
                 let decodedData = try JSONDecoder().decode(SupportData.self, from: data)
                 var supporters = [Healer]()
                 
-                // Filtramos campeones con rol "Support"
                 for (_, healer) in decodedData.data {
                     if healer.roles.contains("Support") {
                         supporters.append(healer)
@@ -82,14 +94,15 @@ struct SupportView: View {
                 
                 DispatchQueue.main.async {
                     self.supportRoster = supporters
+                    self.isLoading = false // Detener la carga
                 }
             } catch {
                 print("Error decoding support data: \(error)")
             }
         }.resume()
     }
-    
-    // Función para obtener la imagen del campeón (foto) desde la API
+
+    // Función para obtener la imagen del campeón
     private func fetchHealerPortrait(healerID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(healerID).png")!
