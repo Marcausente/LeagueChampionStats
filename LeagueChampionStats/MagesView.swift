@@ -2,46 +2,61 @@ import SwiftUI
 
 struct MagesView: View {
     @State private var mageRoster: [Mage] = []
+    @State private var isLoading: Bool = true // Estado de carga
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Lista de los campeones de magos
-                    ForEach(mageRoster) { mage in
-                        // Navegar a la vista de detalles al pulsar sobre un mago
-                        NavigationLink(destination: MageDetailView(mage: mage)) {
-                            HStack {
-                                // Imagen cuadrada del mago
-                                Image(uiImage: fetchMagePortrait(mageID: mage.id))
-                                    .resizable()
-                                    .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
-                                
-                                VStack(alignment: .leading) {
-                                    // Texto de nombre con color negro
-                                    Text(mage.name)
-                                        .font(.headline)
-                                        .foregroundColor(.black) // Texto en color negro
-                                    
-                                    // Texto de designación con color negro
-                                    Text(mage.designation)
-                                        .font(.subheadline)
-                                        .foregroundColor(.black) // Texto en color negro
+            ZStack {
+                if isLoading {
+                    // Pantalla de carga centrada
+                    VStack {
+                        ProgressView("Loading Mages...")
+                            .progressViewStyle(CircularProgressViewStyle())
+                            .foregroundColor(.blue)
+                            .font(.headline)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(UIColor.systemBackground)) // Fondo del mismo color que la vista principal
+                } else {
+                    // Contenido principal
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            // Lista de los campeones de magos
+                            ForEach(mageRoster) { mage in
+                                NavigationLink(destination: MageDetailView(mage: mage)) {
+                                    HStack {
+                                        // Imagen cuadrada del mago
+                                        Image(uiImage: fetchMagePortrait(mageID: mage.id))
+                                            .resizable()
+                                            .frame(width: 50, height: 50) // Asegurarse que la imagen es cuadrada
+                                        
+                                        VStack(alignment: .leading) {
+                                            // Texto de nombre con color negro
+                                            Text(mage.name)
+                                                .font(.headline)
+                                                .foregroundColor(.black) // Texto en color negro
+                                            
+                                            // Texto de designación con color negro
+                                            Text(mage.designation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black) // Texto en color negro
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        // Flecha que apunta a la derecha
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.gray) // Color de la flecha
+                                            .imageScale(.medium)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
+                                            .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
+                                    )
+                                    .padding([.leading, .trailing])
                                 }
-                                
-                                Spacer()
-                                
-                                // Flecha que apunta a la derecha
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray) // Color de la flecha
-                                    .imageScale(.medium)
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 0) // Borde rectangular sin redondear
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1) // Borde delgado de color gris
-                            )
-                            .padding([.leading, .trailing])
                         }
                     }
                 }
@@ -51,8 +66,7 @@ struct MagesView: View {
             .onAppear(perform: fetchMages)
         }
     }
-    
-    // Función para obtener los datos de los campeones (API)
+
     private func fetchMages() {
         guard let url = URL(string: "https://ddragon.leagueoflegends.com/cdn/11.18.1/data/en_US/champion.json") else {
             return
@@ -61,11 +75,17 @@ struct MagesView: View {
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error fetching mages: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
             guard let data = data else {
                 print("No mage data received")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
                 return
             }
 
@@ -79,30 +99,32 @@ struct MagesView: View {
                         mages.append(mage)
                     }
                 }
-                
+
                 DispatchQueue.main.async {
                     self.mageRoster = mages
+                    self.isLoading = false // Carga completada
                 }
             } catch {
                 print("Error decoding mage data: \(error)")
+                DispatchQueue.main.async {
+                    isLoading = false
+                }
             }
         }.resume()
     }
-    
-    // Función para obtener la imagen del mago (foto) desde la API
+
     private func fetchMagePortrait(mageID: String) -> UIImage {
         let baseURL = "https://ddragon.leagueoflegends.com/cdn/11.18.1/img/champion/"
         let portraitURL = URL(string: "\(baseURL)\(mageID).png")!
-        
+
         if let data = try? Data(contentsOf: portraitURL), let portrait = UIImage(data: data) {
             return portrait
         }
-        
+
         return UIImage(systemName: "cross.case.fill") ?? UIImage()
     }
 }
 
-// Vista de detalles para un mago
 struct MageDetailView: View {
     let mage: Mage
     @State private var isLoreExpanded: Bool = false // Estado para controlar si el lore está expandido o colapsado
@@ -229,8 +251,4 @@ struct MageAbilities: Codable {
         case armor = "armor"
         case magicResist = "spellblock"
     }
-}
-
-#Preview {
-    MagesView()
 }
