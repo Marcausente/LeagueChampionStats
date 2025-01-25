@@ -1,42 +1,40 @@
-**Descripción
-**
 League of Legends Stats Viewer es una aplicación desarrollada en Swift que permite a los usuarios explorar y consultar estadísticas detalladas de los campeones y objetos del juego League of Legends. Con una interfaz intuitiva y amigable, los usuarios pueden encontrar información útil para mejorar su experiencia de juego y planificar sus estrategias.
 
 Características principales
 
-**Información de campeones:
-**
-Estadísticas base (vida, daño, armadura, etc.).
+Información de campeones:
 
-Habilidades y descripciones.
+- Estadísticas base (vida, daño, armadura, etc.).
 
-Roles y estilo de juego.
+- Habilidades y descripciones.
 
-**Información de objetos:
-**
-Estadísticas proporcionadas.
+- Roles y estilo de juego.
 
-Costos de compra y recetas.
+Información de objetos:
 
-Sinergias con campeones.
+- Estadísticas proporcionadas.
 
-**Búsqueda rápida:
-**
-Encuentra campeones u objetos fácilmente utilizando nuestra división por categorías.
+- Costos de compra y recetas.
 
-**Favoritos:
-**
-Marca campeones u objetos favoritos para acceder a ellos rápidamente.
+- Sinergias con campeones.
 
-**Actualizaciones:
-**
-Datos siempre sincronizados con las últimas versiones de League of Legends mediante la API oficial de Riot Games.
+Búsqueda rápida:
 
-**Tecnologías utilizadas
-**
-Swift: Lenguaje principal para el desarrollo de la aplicación.
+- Encuentra campeones u objetos fácilmente utilizando nuestra división por categorías.
 
-UIKit: Para diseñar una interfaz visual elegante y responsiva.
+Favoritos:
+
+- Marca campeones u objetos favoritos para acceder a ellos rápidamente.
+
+Actualizaciones:
+
+- Datos siempre sincronizados con las últimas versiones de League of Legends mediante la API oficial de Riot Games.
+
+Tecnologías utilizadas
+
+- Swift: Lenguaje principal para el desarrollo de la aplicación.
+
+- UIKit: Para diseñar una interfaz visual elegante y responsiva.
 
 
 
